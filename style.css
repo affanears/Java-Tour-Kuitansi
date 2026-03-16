@@ -1,305 +1,232 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Segoe UI, sans-serif;
+/* ===============================
+RESET & FONT
+=============================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
 }
 
-body{
-
-background:linear-gradient(135deg,#eef2ff,#f8fafc);
-
-padding:40px;
-
-display:flex;
-
-justify-content:center;
-
+body {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  padding: 40px;
+  display: flex;
+  justify-content: center;
 }
 
-
-
-.container{
-
-width:900px;
-
+/* ===============================
+CONTAINER
+=============================== */
+.container {
+  width: 900px;
 }
 
-
-
-/* FORM */
-
-.formBox{
-
-background:white;
-
-padding:30px;
-
-border-radius:12px;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-
-margin-bottom:40px;
-
+/* ===============================
+FORM
+=============================== */
+.formBox {
+  background: #ffffff;
+  padding: 35px 40px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  margin-bottom: 40px;
+  transition: 0.3s;
 }
 
-.formBox h2{
+.formBox:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
 
-margin-bottom:20px;
+.formBox h2 {
+  margin-bottom: 5px;
+  font-size: 28px;
+  color: #4f46e5;
+  letter-spacing: 1px;
+}
 
+.credit {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.credit a {
+  color: #E1306C;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.credit a:hover {
+  text-decoration: underline;
 }
 
 .formBox input,
-.formBox textarea{
-
-width:100%;
-
-padding:12px;
-
-margin-top:10px;
-
-border-radius:8px;
-
-border:1px solid #ddd;
-
-font-size:14px;
-
+.formBox textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.2s;
 }
 
-.formBox textarea{
-
-resize:none;
-
-height:80px;
-
+.formBox input:focus,
+.formBox textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 6px rgba(79, 70, 229, 0.2);
+  outline: none;
 }
 
-#counter{
-
-font-size:12px;
-
-color:#666;
-
-margin-top:5px;
-
+.formBox textarea {
+  resize: none;
+  height: 90px;
 }
 
-
-
-/* BUTTON */
-
-button{
-
-margin-top:20px;
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:8px;
-
-background:linear-gradient(135deg,#6366f1,#4f46e5);
-
-color:white;
-
-font-size:15px;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:0.3s;
-
+#counter {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  text-align: right;
 }
 
-button:hover{
-
-transform:scale(1.02);
-
+/* ===============================
+BUTTON
+=============================== */
+button {
+  margin-top: 22px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-
-
-/* KUITANSI */
-
-#kuitansi{
-
-display:none;
-
-width:900px;
-
-aspect-ratio:595/419;
-
-background:white;
-
-padding:35px;
-
-border-radius:12px;
-
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-
-border-top:6px solid #f59e0b;
-
-margin-bottom:20px;
-
+button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.3);
 }
 
-
+/* ===============================
+KUITANSI (tidak diubah)
+=============================== */
+#kuitansi {
+  display: none;
+  width: 900px;
+  aspect-ratio: 595/419;
+  background: white;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-top: 6px solid #f59e0b;
+  margin-bottom: 20px;
+}
 
 /* HEADER */
-
-.kHeader{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-border-bottom:2px dashed #ddd;
-
-padding-bottom:10px;
-
-margin-bottom:20px;
-
+.kHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.logoBox img{
-
-width:70px;
-
+.logoBox img {
+  width: 70px;
 }
 
-.titleBox{
-
-text-align:center;
-
+.titleBox {
+  text-align: center;
 }
 
-.titleBox h1{
-
-color:#f59e0b;
-
-font-size:30px;
-
-letter-spacing:2px;
-
+.titleBox h1 {
+  color: #f59e0b;
+  font-size: 30px;
+  letter-spacing: 2px;
 }
 
-.companyBox{
-
-text-align:right;
-
-font-size:14px;
-
-color:#555;
-
+.companyBox {
+  text-align: right;
+  font-size: 14px;
+  color: #555;
 }
-
-
 
 /* CONTENT */
-
-.kContent{
-
-font-size:15px;
-
+.kContent {
+  font-size: 15px;
 }
 
-.dataLine{
-
-border-bottom:1px dashed #aaa;
-
-padding-bottom:4px;
-
-margin-bottom:12px;
-
+.dataLine {
+  border-bottom: 1px dashed #aaa;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
 }
-
-
 
 /* JUMLAH BOX */
-
-.jumlahBox{
-
-margin-top:20px;
-
-background:#fff7ed;
-
-border:2px solid #f59e0b;
-
-padding:12px;
-
-width:320px;
-
-border-radius:8px;
-
+.jumlahBox {
+  margin-top: 20px;
+  background: #fff7ed;
+  border: 2px solid #f59e0b;
+  padding: 12px;
+  width: 320px;
+  border-radius: 10px;
 }
 
-.jumlahBox span{
-
-font-size:14px;
-
-color:#555;
-
+.jumlahBox span {
+  font-size: 14px;
+  color: #555;
 }
 
-.jumlahBox h2{
-
-margin-top:5px;
-
-font-size:24px;
-
-color:#111;
-
+.jumlahBox h2 {
+  margin-top: 5px;
+  font-size: 24px;
+  color: #111;
 }
-
-
 
 /* FOOTER */
-
-.kFooter{
-
-display:flex;
-
-justify-content:space-between;
-
-margin-top:30px;
-
+.kFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
 }
 
-.ttdBox{
-
-text-align:center;
-
+.ttdBox {
+  text-align: center;
 }
 
-.ttdBox img{
-
-width:120px;
-
-margin-top:10px;
-
-margin-bottom:5px;
-
+.ttdBox img {
+  width: 120px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
-
-
 
 /* DOWNLOAD AREA */
-
-.downloadArea{
-
-display:none;
-
-gap:10px;
-
+.downloadArea {
+  display: none;
+  gap: 10px;
 }
 
-.downloadArea button{
+.downloadArea button {
+  width: 200px;
+}
 
-width:200px;
+/* Header form dengan logo */
+.formHeader{
+  display:flex;
+  align-items:center;
+  gap:15px; /* jarak antara logo dan judul */
+  margin-bottom:10px;
+}
 
+.formLogo{
+  width:60px; /* sesuaikan ukuran logo */
+  height:auto;
 }
