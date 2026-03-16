@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Kuitansi ver 1.0</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="id">
+
+<head>
+<meta charset="UTF-8">
+<title>Generator Kuitansi</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="formBox">
+
+<h2>Generator Kuitansi</h2>
+
+<input id="terima" placeholder="Terima Dari" maxlength="40">
+
+<input id="nominal" type="text" placeholder="Nominal Uang">
+
+<textarea id="deskripsi" placeholder="Deskripsi Pembayaran" maxlength="120"></textarea>
+
+<div id="counter">0 / 120</div>
+
+<input id="penerima" placeholder="Nama Penerima" maxlength="30">
+
+<input id="kota" placeholder="Kota" maxlength="20">
+
+<label>Upload Logo</label>
+<input type="file" id="logo">
+
+<label>Upload Tanda Tangan</label>
+<input type="file" id="ttd">
+
+<button onclick="generate()">Generate Kuitansi</button>
+
+</div>
+
+
+
+<div id="kuitansi">
+
+<div class="kHeader">
+
+<div class="logoBox">
+<img id="logoPreview">
+</div>
+
+<div class="titleBox">
+<h1>KUITANSI</h1>
+<p id="no"></p>
+</div>
+
+<div class="companyBox">
+<h3 id="judulPreview"></h3>
+<p id="alamatPreview"></p>
+<p id="teleponPreview"></p>
+</div>
+
+</div>
+
+
+
+<div class="kContent">
+
+<p><b>Terima dari</b></p>
+<p class="dataLine" id="kTerima"></p>
+
+<p><b>Uang sejumlah</b></p>
+<p class="dataLine" id="kNominal"></p>
+
+<p><b>Untuk pembayaran</b></p>
+<p class="dataLine" id="kDeskripsi"></p>
+
+</div>
+
+
+
+<div class="jumlahBox">
+
+<span>Jumlah</span>
+
+<h2 id="kJumlah"></h2>
+
+</div>
+
+
+
+<div class="kFooter">
+
+<div></div>
+
+<div class="ttdBox">
+
+<p id="tanggal"></p>
+
+<img id="ttdPreview">
+
+<p id="kPenerima"></p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="downloadArea">
+
+<button onclick="downloadJPG()">Download JPG</button>
+
+<button onclick="downloadPDF()">Download PDF</button>
+
+</div>
+
+</div>
+
+
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
