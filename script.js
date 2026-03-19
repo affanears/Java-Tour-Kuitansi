@@ -3,7 +3,8 @@
 // ============================
 const users = [
   { username: "admin", password: "12345" },
-  { username: "staff", password: "java123" }
+  { username: "staff", password: "java123" },
+  { username: "affan", password: "AffanCakep" }
 ];
 
 // ============================
