@@ -2,8 +2,8 @@
 // DATA USER (ADMIN CONTROL)
 // ============================
 const users = [
-  { username: "affan", password: "AffanCakep" },
-  { username: "staff", password: "21062011" }
+  { username: "admin", password: "12345" },
+  { username: "staff", password: "java123" }
 ];
 
 // ============================
