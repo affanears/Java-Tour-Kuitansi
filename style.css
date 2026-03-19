@@ -5,18 +5,165 @@ box-sizing:border-box;
 font-family:"Segoe UI",sans-serif;
 }
 
+/* ========================= */
+/* BACKGROUND SLIDER */
+/* ========================= */
+
+.bg-slider{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+overflow:hidden;
+}
+
+.bg-slide{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+transform:scale(1);
+transition: opacity 1.5s ease-in-out, transform 6s ease;
+}
+
+.bg-slide.active{
+opacity:1;
+transform:scale(1.08);
+}
+
+/* overlay biar teks kebaca */
+.bg-slider::after{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.3);
+}
+
+/* ========================= */
+
 body{
-background:linear-gradient(135deg,#eef2ff,#f8fafc);
 padding:40px;
 display:flex;
 justify-content:center;
 }
 
+/* container blur efek */
 .container{
 width:900px;
+backdrop-filter: blur(8px);
+display:none; /* penting: sembunyikan sebelum login */
+position:relative;
 }
 
+/* ========================= */
+/* LOGIN PAGE */
+/* ========================= */
+
+.loginPage{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.loginBox{
+background:white;
+padding:40px;
+border-radius:16px;
+width:320px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+animation:fadeIn 0.5s ease;
+}
+
+.loginLogo{
+width:80px;
+margin-bottom:15px;
+}
+
+.loginBox h2{
+margin-bottom:15px;
+color:#f97316;
+}
+
+.loginBox input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+.loginBox button{
+margin-top:15px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:linear-gradient(135deg,#fb923c,#f97316);
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+.loginBox button:hover{
+transform:scale(1.05);
+}
+
+#errorMsg{
+color:red;
+font-size:12px;
+margin-top:10px;
+}
+
+/* animasi login */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* ========================= */
+/* LOGOUT BUTTON */
+/* ========================= */
+
+.logoutBtn{
+position:absolute;
+top:20px;
+right:20px;
+padding:10px 15px;
+border:none;
+border-radius:8px;
+background:#ef4444;
+color:white;
+cursor:pointer;
+z-index:10;
+transition:0.3s;
+}
+
+.logoutBtn:hover{
+transform:scale(1.05);
+}
+
+/* ========================= */
 /* FORM */
+/* ========================= */
 
 .formBox{
 background:white;
@@ -39,7 +186,7 @@ width:60px;
 
 .formBox h2{
 font-size:28px;
-color:#4f46e5;
+color:#f97316;
 }
 
 .credit{
@@ -67,20 +214,27 @@ text-align:right;
 margin-top:5px;
 }
 
-/* tombol hanya untuk form */
+/* tombol ORANGE */
 .formBox button{
 margin-top:22px;
 width:100%;
 padding:14px;
 border:none;
 border-radius:10px;
-background:linear-gradient(135deg,#6366f1,#4f46e5);
+background:linear-gradient(135deg,#fb923c,#f97316);
 color:white;
 font-size:16px;
 cursor:pointer;
+transition:0.3s;
 }
 
+.formBox button:hover{
+transform:scale(1.03);
+}
+
+/* ========================= */
 /* KUITANSI */
+/* ========================= */
 
 #kuitansi{
 display:none;
@@ -92,6 +246,29 @@ border-radius:12px;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
 border-top:6px solid #f59e0b;
 margin-bottom:20px;
+position:relative;
+overflow:hidden;
+}
+
+.watermark{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+opacity:0.08;
+z-index:0;
+}
+
+.watermark img{
+width:400px;
+}
+
+.kHeader,
+.kContent,
+.jumlahBox,
+.kFooter{
+position:relative;
+z-index:2;
 }
 
 .kHeader{
@@ -149,21 +326,12 @@ margin-top:30px;
 align-items:flex-end;
 }
 
-/* syarat */
-
 .syaratBox{
 width:420px;
 font-size:11px;
 line-height:1.5;
 color:#444;
 }
-
-.syaratBox b{
-display:block;
-margin-bottom:5px;
-}
-
-/* tanda tangan */
 
 .ttdBox{
 text-align:center;
@@ -174,7 +342,9 @@ width:120px;
 margin-top:10px;
 }
 
+/* ========================= */
 /* DOWNLOAD BUTTON */
+/* ========================= */
 
 .downloadArea{
 display:none;
@@ -188,36 +358,48 @@ width:200px;
 height:50px;
 border:none;
 border-radius:10px;
-background:linear-gradient(135deg,#6366f1,#4f46e5);
+background:linear-gradient(135deg,#fb923c,#f97316);
 color:white;
 font-size:16px;
 cursor:pointer;
+transition:0.3s;
 }
 
-#kuitansi{
-  position: relative;
-  overflow: hidden;
+.downloadArea button:hover{
+transform:scale(1.05);
 }
 
-.watermark{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.08;
-  z-index: 0;
-  pointer-events: none;
+/* ========================= */
+/* LOADING SCREEN */
+/* ========================= */
+
+.loadingScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:1000;
+color:white;
+font-size:16px;
 }
 
-.watermark img{
-  width: 400px;
+.loader{
+width:50px;
+height:50px;
+border:5px solid #fff;
+border-top:5px solid #f97316;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin-bottom:15px;
 }
 
-/* supaya konten di atas watermark */
-.kHeader,
-.kContent,
-.jumlahBox,
-.kFooter{
-  position: relative;
-  z-index: 2;
+@keyframes spin{
+0%{ transform:rotate(0deg); }
+100%{ transform:rotate(360deg); }
 }

@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Kuitansi ver 2.0</title>
+    <title>Kuitansi Java Tour 2.3</title>
     <link rel="stylesheet" href="./style.css">
 
   </head>
@@ -19,6 +19,45 @@
 
 <body>
 
+<!-- ========================= -->
+<!-- LOGIN PAGE -->
+<!-- ========================= -->
+<div id="loginPage" class="loginPage">
+
+  <div class="loginBox">
+    <img src="logo-java-tour.png" class="loginLogo">
+
+    <h2>Login Admin</h2>
+
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="errorMsg"></p>
+  </div>
+
+</div>
+
+  <!-- ========================= -->
+<!-- LOADING SCREEN -->
+<!-- ========================= -->
+<div id="loadingScreen" class="loadingScreen">
+  <div class="loader"></div>
+  <p>Memproses login...</p>
+</div>
+
+<!-- ========================= -->
+<!-- BACKGROUND SLIDER -->
+<!-- ========================= -->
+<div class="bg-slider">
+  <div class="bg-slide active"></div>
+  <div class="bg-slide"></div>
+</div>
+
+<!-- ========================= -->
+<!-- MAIN CONTAINER -->
+<!-- ========================= -->
 <div class="container">
 
 <!-- ========================= -->
@@ -36,7 +75,6 @@ by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
 </div>
 
 <input id="terima" placeholder="Terima Dari" maxlength="40">
-
 <input id="nominal" type="text" placeholder="Nominal Uang">
 
 <textarea id="deskripsi" placeholder="Deskripsi Pembayaran" maxlength="120"></textarea>
@@ -51,12 +89,10 @@ by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
 <!-- ========================= -->
 <div id="kuitansi">
 
-<!-- WATERMARK -->
 <div class="watermark">
 <img src="logo-java-tour.png">
 </div>
 
-<!-- HEADER -->
 <div class="kHeader">
 
 <div class="logoBox">
@@ -76,7 +112,6 @@ by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
 
 </div>
 
-<!-- CONTENT -->
 <div class="kContent">
 
 <p><b>Terima dari</b></p>
@@ -90,25 +125,21 @@ by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
 
 </div>
 
-<!-- JUMLAH -->
 <div class="jumlahBox">
 <span>Jumlah</span>
 <h2 id="kJumlah"></h2>
 </div>
 
-<!-- FOOTER -->
 <div class="kFooter">
 
-<!-- SYARAT -->
 <div class="syaratBox">
 <b>Syarat dan Ketentuan</b>
 <p>1. Down Payment 50 % dari total biaya dan pelunasan H-1 sebelum trip</p>
 <p>2. Jika ada perubahan jumlah peserta otomatis harga berubah (Konfirmasi H-7)</p>
-<p>3. Semua pembayaran tidak dapat dikembalikan. Harap tinjau biaya paket perjalanan termasuk akomodasi, transportasi dan layanan lainnya</p>
-<p>4. Pembatalan trip dari customer, DP dianggap hangus</p>
+<p>3. Semua pembayaran tidak dapat dikembalikan</p>
+<p>4. Pembatalan trip, DP hangus</p>
 </div>
 
-<!-- TTD -->
 <div class="ttdBox">
 <p id="tanggal"></p>
 <img id="ttdPreview" src="ttd.png">

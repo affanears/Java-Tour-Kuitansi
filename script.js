@@ -1,4 +1,65 @@
 // ============================
+// DATA USER (ADMIN CONTROL)
+// ============================
+const users = [
+  { username: "affan", password: "AffanCakep" },
+  { username: "staff", password: "java123" }
+];
+
+// ============================
+// LOGIN FUNCTION
+// ============================
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const errorMsg = document.getElementById("errorMsg");
+
+  const validUser = users.find(
+    user => user.username === username && user.password === password
+  );
+
+  if (validUser) {
+    // tampilkan loading
+    document.getElementById("loadingScreen").style.display = "flex";
+
+    // simpan login
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("username", username);
+
+    // delay 3 detik
+    setTimeout(() => {
+      document.getElementById("loadingScreen").style.display = "none";
+      document.getElementById("loginPage").style.display = "none";
+      document.querySelector(".container").style.display = "block";
+    }, 3000);
+
+  } else {
+    errorMsg.innerText = "Username atau password salah!";
+  }
+}
+
+// ============================
+// LOGOUT FUNCTION
+// ============================
+function logout() {
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("username");
+  location.reload();
+}
+
+// ============================
+// CEK LOGIN SAAT LOAD
+// ============================
+window.addEventListener("load", () => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn === "true") {
+    document.getElementById("loginPage").style.display = "none";
+    document.querySelector(".container").style.display = "block";
+  }
+});
+
+// ============================
 // KONFIGURASI PERUSAHAAN
 // ============================
 const perusahaan = {
@@ -12,11 +73,6 @@ const perusahaan = {
 // ============================
 const penerimaTetap = "Doni";
 const kotaTetap = "Malang";
-
-// ============================
-// URL GOOGLE APPS SCRIPT
-// ============================
-const scriptURL = "https://script.google.com/macros/s/AKfycbzvaW8gullfpcFxEsjSJXJAL5wS2fZP26DLdXf5--jnrbji_k8pqGsge50Dnlo7rYc0/exec";
 
 // ============================
 // PINDAH INPUT SAAT ENTER
@@ -101,18 +157,6 @@ function generate() {
   const nomor = "KW/" + Math.floor(Math.random() * 900000 + 100000);
   const tanggal = new Date().toLocaleDateString("id-ID");
 
-  const dataToSheet = {
-    nomor: nomor,
-    terima: terima,
-    nominal: nominal,
-    deskripsi: deskripsi
-  };
-
-  fetch(scriptURL, {
-    method: "POST",
-    body: JSON.stringify(dataToSheet)
-  }).catch(err => console.error(err));
-
   let hasilTerbilang = terbilang(nominal).replace(/\s+/g, " ").trim();
   hasilTerbilang =
     hasilTerbilang.charAt(0).toUpperCase() +
@@ -179,3 +223,28 @@ function resetForm() {
   document.querySelectorAll("input, textarea").forEach(el => el.value = "");
   counter.textContent = "0 / 120";
 }
+
+// ============================
+// BACKGROUND SLIDER
+// ============================
+const backgrounds = ["bg1.jpg", "bg2.jpg", "bg3.jpg", "bg4.jpg"];
+const slides = document.querySelectorAll(".bg-slide");
+
+let current = 0;
+
+slides[0].style.backgroundImage = `url('${backgrounds[0]}')`;
+slides[1].style.backgroundImage = `url('${backgrounds[1]}')`;
+
+function changeBackgroundSmooth() {
+  const next = (current + 1) % backgrounds.length;
+
+  slides[next % 2].style.backgroundImage = `url('${backgrounds[next]}')`;
+
+  slides[current % 2].classList.remove("active");
+  slides[next % 2].classList.add("active");
+
+  current = next;
+}
+
+setInterval(changeBackgroundSmooth, 7000);
+slides[0].classList.add("active");
