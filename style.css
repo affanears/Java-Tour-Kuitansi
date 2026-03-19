@@ -6,18 +6,9 @@ font-family:"Segoe UI",sans-serif;
 }
 
 /* ========================= */
-/* BODY */
+/* BACKGROUND SLIDER */
 /* ========================= */
-body{
-padding:40px;
-display:flex;
-justify-content:center;
-font-size:14px;
-}
 
-/* ========================= */
-/* BACKGROUND */
-/* ========================= */
 .bg-slider{
 position:fixed;
 top:0;
@@ -34,38 +25,45 @@ width:100%;
 height:100%;
 background-size:cover;
 background-position:center;
-background-repeat:no-repeat;
 opacity:0;
-transition:opacity 1.5s ease;
+transform:scale(1);
+transition: opacity 1.5s ease-in-out, transform 6s ease;
 }
 
 .bg-slide.active{
 opacity:1;
+transform:scale(1.08);
 }
 
-/* overlay */
+/* overlay biar teks kebaca */
 .bg-slider::after{
 content:"";
 position:absolute;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.4);
+background:rgba(0,0,0,0.3);
 }
 
 /* ========================= */
-/* CONTAINER */
-/* ========================= */
+
+body{
+padding:40px;
+display:flex;
+justify-content:center;
+}
+
+/* container blur efek */
 .container{
-width:90%;
-max-width:900px;
-backdrop-filter:blur(8px);
-display:none;
+width:900px;
+backdrop-filter: blur(8px);
+display:none; /* penting: sembunyikan sebelum login */
 position:relative;
 }
 
 /* ========================= */
-/* LOGIN */
+/* LOGIN PAGE */
 /* ========================= */
+
 .loginPage{
 position:fixed;
 top:0;
@@ -81,21 +79,21 @@ z-index:999;
 
 .loginBox{
 background:white;
-padding:30px;
+padding:40px;
 border-radius:16px;
-width:90%;
-max-width:320px;
+width:320px;
 text-align:center;
 box-shadow:0 10px 30px rgba(0,0,0,0.3);
+animation:fadeIn 0.5s ease;
 }
 
 .loginLogo{
 width:80px;
-margin-bottom:10px;
+margin-bottom:15px;
 }
 
 .loginBox h2{
-margin-bottom:10px;
+margin-bottom:15px;
 color:#f97316;
 }
 
@@ -116,6 +114,11 @@ border-radius:8px;
 background:linear-gradient(135deg,#fb923c,#f97316);
 color:white;
 cursor:pointer;
+transition:0.3s;
+}
+
+.loginBox button:hover{
+transform:scale(1.05);
 }
 
 #errorMsg{
@@ -124,9 +127,287 @@ font-size:12px;
 margin-top:10px;
 }
 
+/* animasi login */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
 /* ========================= */
-/* LOADING */
+/* LOGOUT BUTTON */
 /* ========================= */
+
+.logoutBtn{
+position:absolute;
+top:20px;
+right:20px;
+padding:10px 15px;
+border:none;
+border-radius:8px;
+background:#ef4444;
+color:white;
+cursor:pointer;
+z-index:10;
+transition:0.3s;
+}
+
+.logoutBtn:hover{
+transform:scale(1.05);
+}
+
+/* ========================= */
+/* FORM */
+/* ========================= */
+
+.formBox{
+background:white;
+padding:35px 40px;
+border-radius:16px;
+box-shadow:0 12px 30px rgba(0,0,0,0.12);
+margin-bottom:40px;
+}
+
+.formHeader{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:10px;
+}
+
+.formLogo{
+width:60px;
+}
+
+.formBox h2{
+font-size:28px;
+color:#f97316;
+}
+
+.credit{
+font-size:12px;
+margin-bottom:20px;
+}
+
+.formBox input,
+.formBox textarea{
+width:100%;
+padding:14px;
+margin-top:12px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
+.formBox textarea{
+height:90px;
+resize:none;
+}
+
+#counter{
+font-size:12px;
+text-align:right;
+margin-top:5px;
+}
+
+/* tombol ORANGE */
+.formBox button{
+margin-top:22px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#fb923c,#f97316);
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.formBox button:hover{
+transform:scale(1.03);
+}
+
+/* ========================= */
+/* KUITANSI */
+/* ========================= */
+
+#kuitansi{
+display:none;
+width:900px;
+aspect-ratio:595/419;
+background:white;
+padding:35px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+border-top:6px solid #f59e0b;
+margin-bottom:20px;
+position:relative;
+overflow:hidden;
+}
+
+.watermark{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+opacity:0.08;
+z-index:0;
+}
+
+.watermark img{
+width:400px;
+}
+
+.kHeader,
+.kContent,
+.jumlahBox,
+.kFooter{
+position:relative;
+z-index:2;
+}
+
+.kHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:2px dashed #ddd;
+padding-bottom:10px;
+margin-bottom:20px;
+}
+
+.logoBox img{
+width:70px;
+}
+
+.titleBox h1{
+color:#f59e0b;
+font-size:30px;
+}
+
+.companyBox{
+text-align:right;
+font-size:14px;
+color:#555;
+}
+
+.kContent{
+font-size:15px;
+}
+
+.dataLine{
+border-bottom:1px dashed #aaa;
+padding-bottom:4px;
+margin-bottom:12px;
+}
+
+.jumlahBox{
+margin-top:20px;
+background:#fff7ed;
+border:2px solid #f59e0b;
+padding:12px;
+width:320px;
+border-radius:10px;
+}
+
+.jumlahBox h2{
+margin-top:5px;
+font-size:24px;
+}
+
+.kFooter{
+display:flex;
+justify-content:space-between;
+margin-top:30px;
+align-items:flex-end;
+}
+
+.syaratBox{
+width:420px;
+font-size:11px;
+line-height:1.5;
+color:#444;
+}
+
+.ttdBox{
+text-align:center;
+}
+
+.ttdBox img{
+width:120px;
+margin-top:10px;
+}
+
+/* ========================= */
+/* DOWNLOAD BUTTON */
+/* ========================= */
+
+.downloadArea{
+display:none;
+justify-content:center;
+gap:15px;
+margin-top:15px;
+}
+
+.downloadArea button{
+width:200px;
+height:50px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#fb923c,#f97316);
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.downloadArea button:hover{
+transform:scale(1.05);
+}
+
+/* ========================= */
+/* LOADING SCREEN */
+/* ========================= */
+
+.loadingScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:1000;
+color:white;
+font-size:16px;
+}
+
+.loader{
+width:50px;
+height:50px;
+border:5px solid #fff;
+border-top:5px solid #f97316;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin-bottom:15px;
+}
+
+@keyframes spin{
+0%{ transform:rotate(0deg); }
+100%{ transform:rotate(360deg); }
+}
+
+/* ========================= */
+/* LOADING SCREEN */
+/* ========================= */
+
 .loadingScreen{
 position:fixed;
 top:0;
@@ -140,13 +421,30 @@ align-items:center;
 flex-direction:column;
 z-index:1000;
 color:white;
+font-size:16px;
+text-align:center;
 }
 
+/* logo animasi */
 .loadingLogo{
 width:90px;
 margin-bottom:20px;
+animation:fadeZoom 1.5s ease-in-out infinite alternate;
 }
 
+/* animasi logo */
+@keyframes fadeZoom{
+from{
+opacity:0.6;
+transform:scale(0.9);
+}
+to{
+opacity:1;
+transform:scale(1.05);
+}
+}
+
+/* spinner */
 .loader{
 width:45px;
 height:45px;
@@ -154,243 +452,30 @@ border:4px solid #fff;
 border-top:4px solid #f97316;
 border-radius:50%;
 animation:spin 1s linear infinite;
-margin-bottom:10px;
+margin-bottom:15px;
 }
 
 @keyframes spin{
-0%{transform:rotate(0);}
-100%{transform:rotate(360deg);}
+0%{ transform:rotate(0deg); }
+100%{ transform:rotate(360deg); }
 }
 
-/* ========================= */
-/* LOGOUT */
-/* ========================= */
 .logoutBtn{
 position:absolute;
 top:20px;
 right:20px;
-padding:10px 14px;
+padding:10px 16px;
 border:none;
 border-radius:8px;
 background:#ef4444;
 color:white;
 cursor:pointer;
-}
-
-/* ========================= */
-/* FORM */
-/* ========================= */
-.formBox{
-background:white;
-padding:30px;
-border-radius:16px;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
-margin-bottom:30px;
-}
-
-.formHeader{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:10px;
-}
-
-.formLogo{
-width:50px;
-}
-
-.formBox h2{
-font-size:24px;
-color:#f97316;
-}
-
-.formBox input,
-.formBox textarea{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid #ddd;
-}
-
-.formBox textarea{
-height:80px;
-resize:none;
-}
-
-#counter{
-font-size:12px;
-text-align:right;
-margin-top:5px;
-}
-
-.formBox button{
-margin-top:20px;
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:linear-gradient(135deg,#fb923c,#f97316);
-color:white;
-font-size:15px;
-cursor:pointer;
-}
-
-/* ========================= */
-/* KUITANSI */
-/* ========================= */
-#kuitansi{
-display:none;
-width:100%;
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-border-top:5px solid #f59e0b;
-margin-bottom:20px;
-position:relative;
-}
-
-.watermark{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-opacity:0.08;
-}
-
-.watermark img{
-width:300px;
-}
-
-.kHeader{
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-bottom:2px dashed #ddd;
-padding-bottom:10px;
-margin-bottom:15px;
-}
-
-.logoBox img{
-width:60px;
-}
-
-.titleBox h1{
-color:#f59e0b;
-font-size:26px;
-}
-
-.companyBox{
-text-align:right;
-font-size:13px;
-}
-
-.kContent{
 font-size:14px;
+transition:0.3s;
+z-index:10;
 }
 
-.dataLine{
-border-bottom:1px dashed #aaa;
-margin-bottom:10px;
-padding-bottom:4px;
-}
-
-.jumlahBox{
-margin-top:15px;
-background:#fff7ed;
-border:2px solid #f59e0b;
-padding:10px;
-border-radius:10px;
-}
-
-.jumlahBox h2{
-margin-top:5px;
-}
-
-.kFooter{
-display:flex;
-justify-content:space-between;
-margin-top:20px;
-gap:20px;
-}
-
-.syaratBox{
-font-size:11px;
-}
-
-.ttdBox{
-text-align:center;
-}
-
-.ttdBox img{
-width:100px;
-margin-top:10px;
-}
-
-/* ========================= */
-/* DOWNLOAD */
-/* ========================= */
-.downloadArea{
-display:none;
-gap:10px;
-}
-
-.downloadArea button{
-flex:1;
-padding:12px;
-border:none;
-border-radius:10px;
-background:linear-gradient(135deg,#fb923c,#f97316);
-color:white;
-cursor:pointer;
-}
-
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
-@media (max-width:768px){
-
-body{
-padding:20px;
-font-size:13px;
-}
-
-.logoutBtn{
-position:static;
-margin-bottom:10px;
-}
-
-.kHeader{
-flex-direction:column;
-align-items:flex-start;
-gap:10px;
-}
-
-.kFooter{
-flex-direction:column;
-}
-
-.downloadArea{
-flex-direction:column;
-}
-
-}
-
-.version{
-  position:fixed;
-  bottom:10px;
-  right:15px;
-  font-size:11px;
-  color:rgba(255,255,255,0.7);
-  z-index:999;
-  pointer-events:none; /* biar gak ganggu klik */
-}
-
-@media (max-width:768px){
-  .version{
-    font-size:10px;
-    bottom:8px;
-    right:10px;
-  }
+.logoutBtn:hover{
+transform:scale(1.05);
+background:#dc2626;
 }
