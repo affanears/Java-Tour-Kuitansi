@@ -410,3 +410,24 @@ flex-direction:column;
 .download-mode + .bg-slider {
   display: none !important;
 }
+
+/* MODE DOWNLOAD SUPER BERSIH */
+.download-mode body{
+  padding:0 !important;
+  background:#ffffff !important;
+}
+
+.download-mode .container{
+  backdrop-filter:none !important;
+  background:#ffffff !important;
+}
+
+.download-mode #kuitansi{
+  box-shadow:none !important;
+  margin:0 !important;
+  border-radius:0 !important;
+}
+
+.download-mode .bg-slider{
+  display:none !important;
+}
