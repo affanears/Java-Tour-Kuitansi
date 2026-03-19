@@ -1,232 +1,223 @@
-/* ===============================
-RESET & FONT
-=============================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
 }
 
-body {
-  background: linear-gradient(135deg, #eef2ff, #f8fafc);
-  padding: 40px;
-  display: flex;
-  justify-content: center;
+body{
+background:linear-gradient(135deg,#eef2ff,#f8fafc);
+padding:40px;
+display:flex;
+justify-content:center;
 }
 
-/* ===============================
-CONTAINER
-=============================== */
-.container {
-  width: 900px;
+.container{
+width:900px;
 }
 
-/* ===============================
-FORM
-=============================== */
-.formBox {
-  background: #ffffff;
-  padding: 35px 40px;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-  margin-bottom: 40px;
-  transition: 0.3s;
+/* FORM */
+
+.formBox{
+background:white;
+padding:35px 40px;
+border-radius:16px;
+box-shadow:0 12px 30px rgba(0,0,0,0.12);
+margin-bottom:40px;
 }
 
-.formBox:hover {
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-}
-
-.formBox h2 {
-  margin-bottom: 5px;
-  font-size: 28px;
-  color: #4f46e5;
-  letter-spacing: 1px;
-}
-
-.credit {
-  font-size: 12px;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.credit a {
-  color: #E1306C;
-  text-decoration: none;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.credit a:hover {
-  text-decoration: underline;
-}
-
-.formBox input,
-.formBox textarea {
-  width: 100%;
-  padding: 14px 16px;
-  margin-top: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  transition: 0.2s;
-}
-
-.formBox input:focus,
-.formBox textarea:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 6px rgba(79, 70, 229, 0.2);
-  outline: none;
-}
-
-.formBox textarea {
-  resize: none;
-  height: 90px;
-}
-
-#counter {
-  font-size: 12px;
-  color: #666;
-  margin-top: 5px;
-  text-align: right;
-}
-
-/* ===============================
-BUTTON
-=============================== */
-button {
-  margin-top: 22px;
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.3);
-}
-
-/* ===============================
-KUITANSI (tidak diubah)
-=============================== */
-#kuitansi {
-  display: none;
-  width: 900px;
-  aspect-ratio: 595/419;
-  background: white;
-  padding: 35px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  border-top: 6px solid #f59e0b;
-  margin-bottom: 20px;
-}
-
-/* HEADER */
-.kHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px dashed #ddd;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.logoBox img {
-  width: 70px;
-}
-
-.titleBox {
-  text-align: center;
-}
-
-.titleBox h1 {
-  color: #f59e0b;
-  font-size: 30px;
-  letter-spacing: 2px;
-}
-
-.companyBox {
-  text-align: right;
-  font-size: 14px;
-  color: #555;
-}
-
-/* CONTENT */
-.kContent {
-  font-size: 15px;
-}
-
-.dataLine {
-  border-bottom: 1px dashed #aaa;
-  padding-bottom: 4px;
-  margin-bottom: 12px;
-}
-
-/* JUMLAH BOX */
-.jumlahBox {
-  margin-top: 20px;
-  background: #fff7ed;
-  border: 2px solid #f59e0b;
-  padding: 12px;
-  width: 320px;
-  border-radius: 10px;
-}
-
-.jumlahBox span {
-  font-size: 14px;
-  color: #555;
-}
-
-.jumlahBox h2 {
-  margin-top: 5px;
-  font-size: 24px;
-  color: #111;
-}
-
-/* FOOTER */
-.kFooter {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-}
-
-.ttdBox {
-  text-align: center;
-}
-
-.ttdBox img {
-  width: 120px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-}
-
-/* DOWNLOAD AREA */
-.downloadArea {
-  display: none;
-  gap: 10px;
-}
-
-.downloadArea button {
-  width: 200px;
-}
-
-/* Header form dengan logo */
 .formHeader{
-  display:flex;
-  align-items:center;
-  gap:15px; /* jarak antara logo dan judul */
-  margin-bottom:10px;
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:10px;
 }
 
 .formLogo{
-  width:60px; /* sesuaikan ukuran logo */
-  height:auto;
+width:60px;
+}
+
+.formBox h2{
+font-size:28px;
+color:#4f46e5;
+}
+
+.credit{
+font-size:12px;
+margin-bottom:20px;
+}
+
+.formBox input,
+.formBox textarea{
+width:100%;
+padding:14px;
+margin-top:12px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
+.formBox textarea{
+height:90px;
+resize:none;
+}
+
+#counter{
+font-size:12px;
+text-align:right;
+margin-top:5px;
+}
+
+/* tombol hanya untuk form */
+.formBox button{
+margin-top:22px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#6366f1,#4f46e5);
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+/* KUITANSI */
+
+#kuitansi{
+display:none;
+width:900px;
+aspect-ratio:595/419;
+background:white;
+padding:35px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+border-top:6px solid #f59e0b;
+margin-bottom:20px;
+}
+
+.kHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:2px dashed #ddd;
+padding-bottom:10px;
+margin-bottom:20px;
+}
+
+.logoBox img{
+width:70px;
+}
+
+.titleBox h1{
+color:#f59e0b;
+font-size:30px;
+}
+
+.companyBox{
+text-align:right;
+font-size:14px;
+color:#555;
+}
+
+.kContent{
+font-size:15px;
+}
+
+.dataLine{
+border-bottom:1px dashed #aaa;
+padding-bottom:4px;
+margin-bottom:12px;
+}
+
+.jumlahBox{
+margin-top:20px;
+background:#fff7ed;
+border:2px solid #f59e0b;
+padding:12px;
+width:320px;
+border-radius:10px;
+}
+
+.jumlahBox h2{
+margin-top:5px;
+font-size:24px;
+}
+
+.kFooter{
+display:flex;
+justify-content:space-between;
+margin-top:30px;
+align-items:flex-end;
+}
+
+/* syarat */
+
+.syaratBox{
+width:420px;
+font-size:11px;
+line-height:1.5;
+color:#444;
+}
+
+.syaratBox b{
+display:block;
+margin-bottom:5px;
+}
+
+/* tanda tangan */
+
+.ttdBox{
+text-align:center;
+}
+
+.ttdBox img{
+width:120px;
+margin-top:10px;
+}
+
+/* DOWNLOAD BUTTON */
+
+.downloadArea{
+display:none;
+justify-content:center;
+gap:15px;
+margin-top:15px;
+}
+
+.downloadArea button{
+width:200px;
+height:50px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#6366f1,#4f46e5);
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+#kuitansi{
+  position: relative;
+  overflow: hidden;
+}
+
+.watermark{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.watermark img{
+  width: 400px;
+}
+
+/* supaya konten di atas watermark */
+.kHeader,
+.kContent,
+.jumlahBox,
+.kFooter{
+  position: relative;
+  z-index: 2;
 }
