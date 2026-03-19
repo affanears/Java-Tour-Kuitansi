@@ -8,6 +8,11 @@ const users = [
 ];
 
 // ============================
+// URL GOOGLE SPREADSHEET
+// ============================
+const scriptURL = "https://script.google.com/macros/s/AKfycbyLuGfldklKMuispvavPRhEel2gH1llAmP3lzmfD0WLCEoXYhjIGuljn0YPSaglO5ws/exec";
+
+// ============================
 // LOGIN FUNCTION + LOADING
 // ============================
 function login() {
@@ -24,7 +29,6 @@ function login() {
     document.getElementById("loadingText").innerText =
       "Selamat datang, " + username + "...";
 
-    // simpan session
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("username", username);
     localStorage.setItem("loginTime", Date.now());
@@ -41,23 +45,18 @@ function login() {
 }
 
 // ============================
-// LOGOUT FUNCTION
+// LOGOUT FUNCTION (FIX)
 // ============================
 function logout() {
-  const konfirmasi = confirm("Yakin ingin logout?");
+  if (!confirm("Yakin ingin logout?")) return;
 
-  if (!konfirmasi) return;
-
-  // hapus session
   localStorage.removeItem("isLoggedIn");
   localStorage.removeItem("username");
   localStorage.removeItem("loginTime");
 
-  // tampilkan login kembali TANPA reload
   document.getElementById("loginPage").style.display = "flex";
   document.querySelector(".container").style.display = "none";
 
-  // optional: kosongkan input
   document.getElementById("username").value = "";
   document.getElementById("password").value = "";
 }
@@ -65,17 +64,14 @@ function logout() {
 // ============================
 // AUTO LOGOUT 1 JAM
 // ============================
-const MAX_TIME = 60 * 60 * 1000; // 1 jam
+const MAX_TIME = 60 * 60 * 1000;
 
 function checkSession() {
   const loginTime = localStorage.getItem("loginTime");
-
   if (!loginTime) return;
 
   const now = Date.now();
-  const selisih = now - loginTime;
-
-  if (selisih > MAX_TIME) {
+  if (now - loginTime > MAX_TIME) {
     localStorage.clear();
     alert("Session habis, silakan login kembali.");
     location.reload();
@@ -182,7 +178,7 @@ function terbilang(nilai) {
 }
 
 // ============================
-// GENERATE KUITANSI
+// GENERATE + KIRIM KE SHEET
 // ============================
 function generate() {
   const terima = document.getElementById("terima").value.trim();
@@ -195,8 +191,29 @@ function generate() {
   }
 
   const nomor = "KW/" + Math.floor(Math.random() * 900000 + 100000);
-  const tanggal = new Date().toLocaleDateString("id-ID");
+  const tanggal = new Date().toLocaleString("id-ID");
 
+  // ============================
+  // KIRIM KE SPREADSHEET
+  // ============================
+  const dataToSheet = {
+    nomor: nomor,
+    terima: terima,
+    nominal: Number(nominal),
+    deskripsi: deskripsi,
+    tanggal: tanggal
+  };
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(dataToSheet)
+  })
+  .then(() => console.log("Data masuk spreadsheet"))
+  .catch(err => console.error("Error:", err));
+
+  // ============================
+  // TAMPILKAN KUITANSI
+  // ============================
   let hasilTerbilang = terbilang(nominal).replace(/\s+/g, " ").trim();
   hasilTerbilang =
     hasilTerbilang.charAt(0).toUpperCase() +
@@ -229,11 +246,22 @@ function generate() {
 // DOWNLOAD JPG
 // ============================
 function downloadJPG() {
-  html2canvas(document.querySelector("#kuitansi")).then(canvas => {
+  const bg = document.querySelector(".bg-slider");
+
+  // sembunyikan background (biang abu-abu)
+  bg.style.display = "none";
+
+  html2canvas(document.querySelector("#kuitansi"), {
+    backgroundColor: "#ffffff" // paksa putih
+  }).then(canvas => {
     const link = document.createElement("a");
     link.download = "kuitansi.jpg";
     link.href = canvas.toDataURL("image/jpeg");
     link.click();
+
+    // tampilkan lagi background
+    bg.style.display = "block";
+
     resetForm();
   });
 }
@@ -242,13 +270,21 @@ function downloadJPG() {
 // DOWNLOAD PDF
 // ============================
 async function downloadPDF() {
+  const bg = document.querySelector(".bg-slider");
+  bg.style.display = "none";
+
   const { jsPDF } = window.jspdf;
-  const canvas = await html2canvas(document.querySelector("#kuitansi"));
+  const canvas = await html2canvas(document.querySelector("#kuitansi"), {
+    backgroundColor: "#ffffff"
+  });
+
   const imgData = canvas.toDataURL("image/png");
 
   const pdf = new jsPDF("landscape", "px", [canvas.width, canvas.height]);
   pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
   pdf.save("kuitansi.pdf");
+
+  bg.style.display = "block";
 
   resetForm();
 }
@@ -288,3 +324,25 @@ function changeBackgroundSmooth() {
 
 setInterval(changeBackgroundSmooth, 7000);
 slides[0].classList.add("active");
+
+// ============================
+// ENTER LOGIN NAVIGATION
+// ============================
+
+const loginInputs = document.querySelectorAll("#loginPage input");
+
+loginInputs.forEach((input, index) => {
+  input.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+      e.preventDefault();
+
+      if(index + 1 < loginInputs.length){
+        // pindah ke input berikutnya
+        loginInputs[index + 1].focus();
+      } else {
+        // kalau di password → langsung login
+        login();
+      }
+    }
+  });
+});
