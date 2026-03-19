@@ -2,12 +2,12 @@
 // DATA USER (ADMIN CONTROL)
 // ============================
 const users = [
-  { username: "affan", password: "AffanCakep" },
+  { username: "admin", password: "12345" },
   { username: "staff", password: "java123" }
 ];
 
 // ============================
-// LOGIN FUNCTION
+// LOGIN FUNCTION + LOADING
 // ============================
 function login() {
   const username = document.getElementById("username").value;
@@ -19,14 +19,15 @@ function login() {
   );
 
   if (validUser) {
-    // tampilkan loading
     document.getElementById("loadingScreen").style.display = "flex";
+    document.getElementById("loadingText").innerText =
+      "Selamat datang, " + username + "...";
 
-    // simpan login
+    // simpan session
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("username", username);
+    localStorage.setItem("loginTime", Date.now());
 
-    // delay 3 detik
     setTimeout(() => {
       document.getElementById("loadingScreen").style.display = "none";
       document.getElementById("loginPage").style.display = "none";
@@ -42,15 +43,50 @@ function login() {
 // LOGOUT FUNCTION
 // ============================
 function logout() {
+  const konfirmasi = confirm("Yakin ingin logout?");
+
+  if (!konfirmasi) return;
+
+  // hapus session
   localStorage.removeItem("isLoggedIn");
   localStorage.removeItem("username");
-  location.reload();
+  localStorage.removeItem("loginTime");
+
+  // tampilkan login kembali TANPA reload
+  document.getElementById("loginPage").style.display = "flex";
+  document.querySelector(".container").style.display = "none";
+
+  // optional: kosongkan input
+  document.getElementById("username").value = "";
+  document.getElementById("password").value = "";
 }
 
 // ============================
-// CEK LOGIN SAAT LOAD
+// AUTO LOGOUT 1 JAM
+// ============================
+const MAX_TIME = 60 * 60 * 1000; // 1 jam
+
+function checkSession() {
+  const loginTime = localStorage.getItem("loginTime");
+
+  if (!loginTime) return;
+
+  const now = Date.now();
+  const selisih = now - loginTime;
+
+  if (selisih > MAX_TIME) {
+    localStorage.clear();
+    alert("Session habis, silakan login kembali.");
+    location.reload();
+  }
+}
+
+// ============================
+// AUTO LOGIN SAAT LOAD
 // ============================
 window.addEventListener("load", () => {
+  checkSession();
+
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   if (isLoggedIn === "true") {
@@ -58,6 +94,9 @@ window.addEventListener("load", () => {
     document.querySelector(".container").style.display = "block";
   }
 });
+
+// cek tiap 1 menit
+setInterval(checkSession, 60000);
 
 // ============================
 // KONFIGURASI PERUSAHAAN
