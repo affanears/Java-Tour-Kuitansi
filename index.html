@@ -10,17 +10,6 @@
     
   <body>
   <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Kuitansi Java Tour 2.3</title>
-    <link rel="stylesheet" href="./style.css">
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -30,59 +19,43 @@
 
 <body>
 
-<!-- ========================= -->
 <!-- LOGIN PAGE -->
-<!-- ========================= -->
 <div id="loginPage" class="loginPage">
-
   <div class="loginBox">
     <img src="logo-java-tour.png" class="loginLogo">
-
     <h2>Login Admin</h2>
-<p class="loginCredit">
-created by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
-</p>
-    
+
+    <p class="loginCredit">
+      created by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
+    </p>
+
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
 
     <button onclick="login()">Login</button>
-
     <p id="errorMsg"></p>
   </div>
-
 </div>
 
-  <!-- ========================= -->
-<!-- LOADING SCREEN -->
-<!-- ========================= -->
+<!-- LOADING -->
 <div id="loadingScreen" class="loadingScreen">
-  
   <img src="logo-java-tour.png" class="loadingLogo">
-
   <div class="loader"></div>
   <p id="loadingText">Memproses login...</p>
-
 </div>
 
-<!-- ========================= -->
-<!-- BACKGROUND SLIDER -->
-<!-- ========================= -->
+<!-- BACKGROUND -->
 <div class="bg-slider">
   <div class="bg-slide active"></div>
   <div class="bg-slide"></div>
 </div>
 
-<!-- ========================= -->
-<!-- MAIN CONTAINER -->
-<!-- ========================= -->
+<!-- MAIN -->
 <div class="container">
-  
-  <button class="logoutBtn" onclick="logout()">Logout</button>
 
-<!-- ========================= -->
-<!-- FORM GENERATOR -->
-<!-- ========================= -->
+<button class="logoutBtn" onclick="logout()">Logout</button>
+
+<!-- FORM -->
 <div class="formBox" id="generatorBox">
 
 <div class="formHeader">
@@ -104,9 +77,7 @@ by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
 
 </div>
 
-<!-- ========================= -->
 <!-- KUITANSI -->
-<!-- ========================= -->
 <div id="kuitansi">
 
 <div class="watermark">
@@ -170,9 +141,7 @@ by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
 
 </div>
 
-<!-- ========================= -->
-<!-- DOWNLOAD BUTTON -->
-<!-- ========================= -->
+<!-- DOWNLOAD -->
 <div class="downloadArea">
 <button onclick="downloadJPG()">Download JPG</button>
 <button onclick="downloadPDF()">Download PDF</button>
@@ -180,21 +149,14 @@ by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
 
 </div>
 
-<!-- ========================= -->
+<p class="versi">Versi 3.0</p>
+
 <!-- SCRIPT -->
-<!-- ========================= -->
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="script.js"></script>
 
 </body>
-</html>
-    <script  src="./script.js"></script>
-    
-    <p class="versi">Versi 3.0</p>
-
-  </body>
-  
 </html>
     <script  src="./script.js"></script>
 

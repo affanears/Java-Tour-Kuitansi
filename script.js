@@ -1,20 +1,21 @@
 // ============================
-// KONFIG GOOGLE SHEET
+// KONEKSI GOOGLE SPREADSHEET
 // ============================
-const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbyZbkX0aQjCNuCcJEU5U4Is5brefAAIY9--jrOsHzysqDoftPwslXmV8STt2aIEmKDi/exec";
+const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbzCMFOk6RZeQeTHFvXeVPi71Y5jFpss_X0waYbjmx8yJ3mwvjr4iBMwbgm1Jpjwhsqb1g/exec";
+
 
 // ============================
-// DATA USER (ADMIN CONTROL)
+// DATA USER (LOGIN ADMIN)
 // ============================
 const users = [
   { username: "JavaTour", password: "12345" },
   { username: "affan", password: "AffanCakep" },
   { username: "user", password: "21062011" }
-  
 ];
 
+
 // ============================
-// LOGIN FUNCTION + LOADING
+// LOGIN
 // ============================
 function login() {
   const username = document.getElementById("username").value;
@@ -45,33 +46,34 @@ function login() {
   }
 }
 
+
 // ============================
-// ENTER LOGIN NAVIGATION
+// NAVIGASI ENTER LOGIN
 // ============================
-const loginInputs = document.querySelectorAll("#loginPage input");
-
-loginInputs.forEach((input, index) => {
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-
-      if (index === 0) {
-        loginInputs[1].focus();
-      } else {
-        login();
-      }
-    }
-  });
-});
-
-// auto focus username
 window.addEventListener("load", () => {
+  const loginInputs = document.querySelectorAll("#loginPage input");
+
+  loginInputs.forEach((input, index) => {
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+
+        if (index === 0) {
+          loginInputs[1].focus();
+        } else {
+          login();
+        }
+      }
+    });
+  });
+
   const usernameInput = document.getElementById("username");
   if (usernameInput) usernameInput.focus();
 });
 
+
 // ============================
-// LOGOUT FUNCTION
+// LOGOUT
 // ============================
 function logout() {
   if (!confirm("Yakin ingin logout?")) return;
@@ -85,8 +87,9 @@ function logout() {
   document.getElementById("password").value = "";
 }
 
+
 // ============================
-// AUTO LOGIN & SESSION
+// SESSION LOGIN
 // ============================
 const MAX_TIME = 60 * 60 * 1000;
 
@@ -112,8 +115,9 @@ window.addEventListener("load", () => {
 
 setInterval(checkSession, 60000);
 
+
 // ============================
-// KONFIGURASI PERUSAHAAN
+// DATA PERUSAHAAN
 // ============================
 const perusahaan = {
   nama: "CV. JAVA TOUR INDONESIA",
@@ -124,65 +128,86 @@ const perusahaan = {
 const penerimaTetap = "Doni";
 const kotaTetap = "Malang";
 
-// ============================
-// INPUT NAVIGATION FORM
-// ============================
-const inputs = document.querySelectorAll("#generatorBox input, #generatorBox textarea");
 
-inputs.forEach((input, index) => {
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
+// ============================
+// NAVIGASI INPUT FORM
+// ============================
+window.addEventListener("load", () => {
+  const inputs = document.querySelectorAll("#generatorBox input, #generatorBox textarea");
 
-      if (index + 1 < inputs.length) {
-        inputs[index + 1].focus();
-      } else {
-        generate();
+  inputs.forEach((input, index) => {
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+
+        if (index + 1 < inputs.length) {
+          inputs[index + 1].focus();
+        } else {
+          generate();
+        }
       }
-    }
+    });
   });
 });
+
 
 // ============================
 // COUNTER DESKRIPSI
 // ============================
-const deskripsiInput = document.getElementById("deskripsi");
-const counter = document.getElementById("counter");
+window.addEventListener("load", () => {
+  const deskripsiInput = document.getElementById("deskripsi");
+  const counter = document.getElementById("counter");
 
-deskripsiInput.addEventListener("input", () => {
-  counter.textContent = deskripsiInput.value.length + " / 120";
+  if (deskripsiInput) {
+    deskripsiInput.addEventListener("input", () => {
+      counter.textContent = deskripsiInput.value.length + " / 120";
+    });
+  }
 });
+
 
 // ============================
 // FORMAT NOMINAL
 // ============================
-const nominalInput = document.getElementById("nominal");
+window.addEventListener("load", () => {
+  const nominalInput = document.getElementById("nominal");
 
-nominalInput.addEventListener("input", function () {
-  let angka = this.value.replace(/[^0-9]/g, "");
-  this.value = angka ? Number(angka).toLocaleString("id-ID") : "";
+  if (nominalInput) {
+    nominalInput.addEventListener("input", function () {
+      let angka = this.value.replace(/[^0-9]/g, "");
+      this.value = angka ? Number(angka).toLocaleString("id-ID") : "";
+    });
+  }
 });
+
 
 // ============================
 // TERBILANG
 // ============================
 function terbilang(nilai) {
-  const huruf = ["", "satu", "dua", "tiga", "empat", "lima",
-    "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
+  const huruf = [
+    "", "satu", "dua", "tiga", "empat", "lima",
+    "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"
+  ];
 
   nilai = parseInt(nilai);
 
   if (nilai < 12) return huruf[nilai];
   if (nilai < 20) return terbilang(nilai - 10) + " belas";
-  if (nilai < 100) return terbilang(Math.floor(nilai / 10)) + " puluh " + terbilang(nilai % 10);
+  if (nilai < 100)
+    return terbilang(Math.floor(nilai / 10)) + " puluh " + terbilang(nilai % 10);
   if (nilai < 200) return "seratus " + terbilang(nilai - 100);
-  if (nilai < 1000) return terbilang(Math.floor(nilai / 100)) + " ratus " + terbilang(nilai % 100);
+  if (nilai < 1000)
+    return terbilang(Math.floor(nilai / 100)) + " ratus " + terbilang(nilai % 100);
   if (nilai < 2000) return "seribu " + terbilang(nilai - 1000);
-  if (nilai < 1000000) return terbilang(Math.floor(nilai / 1000)) + " ribu " + terbilang(nilai % 1000);
-  if (nilai < 1000000000) return terbilang(Math.floor(nilai / 1000000)) + " juta " + terbilang(nilai % 1000000);
+  if (nilai < 1000000)
+    return terbilang(Math.floor(nilai / 1000)) + " ribu " + terbilang(nilai % 1000);
+  if (nilai < 1000000000)
+    return terbilang(Math.floor(nilai / 1000000)) + " juta " + terbilang(nilai % 1000000);
 
   return "";
 }
+
 
 // ============================
 // KIRIM KE GOOGLE SHEET
@@ -190,13 +215,20 @@ function terbilang(nilai) {
 function kirimKeSpreadsheet(data) {
   fetch(SPREADSHEET_URL, {
     method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
   })
-  .then(res => res.json())
-  .then(res => console.log("Spreadsheet:", res))
-  .catch(err => console.error("Error:", err));
+  .then(() => {
+    console.log("Data berhasil dikirim ke Spreadsheet");
+  })
+  .catch(error => {
+    console.error("Gagal kirim data:", error);
+  });
 }
+
 
 // ============================
 // GENERATE KUITANSI
@@ -232,12 +264,13 @@ function generate() {
     "Rp " + Number(nominal).toLocaleString("id-ID") + ",00";
 
   document.getElementById("kPenerima").innerText = "Penerima: " + penerimaTetap;
-  document.getElementById("tanggal").innerText = kotaTetap + ", " + tanggal;
+  document.getElementById("tanggal").innerText =
+    kotaTetap + ", " + tanggal;
 
   document.getElementById("kuitansi").style.display = "block";
   document.querySelector(".downloadArea").style.display = "flex";
 
-  // 🔥 KIRIM DATA KE SPREADSHEET
+  // kirim ke spreadsheet
   kirimKeSpreadsheet({
     no: nomor,
     terima: terima,
@@ -246,6 +279,7 @@ function generate() {
     tanggal: tanggal
   });
 }
+
 
 // ============================
 // DOWNLOAD JPG
@@ -263,6 +297,7 @@ function downloadJPG() {
     link.click();
   });
 }
+
 
 // ============================
 // DOWNLOAD PDF
@@ -283,27 +318,30 @@ async function downloadPDF() {
   pdf.save("kuitansi.pdf");
 }
 
+
 // ============================
 // BACKGROUND SLIDER
 // ============================
 const backgrounds = ["bg1.jpg", "bg2.jpg", "bg3.jpg", "bg4.jpg"];
-const slides = document.querySelectorAll(".bg-slide");
-
 let current = 0;
 
-slides[0].style.backgroundImage = `url('${backgrounds[0]}')`;
-slides[1].style.backgroundImage = `url('${backgrounds[1]}')`;
+window.addEventListener("load", () => {
+  const slides = document.querySelectorAll(".bg-slide");
 
-function changeBackgroundSmooth() {
-  const next = (current + 1) % backgrounds.length;
+  if (slides.length < 2) return;
 
-  slides[next % 2].style.backgroundImage = `url('${backgrounds[next]}')`;
+  slides[0].style.backgroundImage = `url('${backgrounds[0]}')`;
+  slides[1].style.backgroundImage = `url('${backgrounds[1]}')`;
+  slides[0].classList.add("active");
 
-  slides[current % 2].classList.remove("active");
-  slides[next % 2].classList.add("active");
+  setInterval(() => {
+    const next = (current + 1) % backgrounds.length;
 
-  current = next;
-}
+    slides[next % 2].style.backgroundImage = `url('${backgrounds[next]}')`;
 
-setInterval(changeBackgroundSmooth, 7000);
-slides[0].classList.add("active");
+    slides[current % 2].classList.remove("active");
+    slides[next % 2].classList.add("active");
+
+    current = next;
+  }, 7000);
+});
