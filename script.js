@@ -3,17 +3,11 @@
 // ============================
 const users = [
   { username: "admin", password: "12345" },
-  { username: "staff", password: "java123" },
-  { username: "affan", password: "AffanCakep" }
+  { username: "staff", password: "java123" }
 ];
 
 // ============================
-// URL GOOGLE SPREADSHEET
-// ============================
-const scriptURL = "https://script.google.com/macros/s/AKfycbyLuGfldklKMuispvavPRhEel2gH1llAmP3lzmfD0WLCEoXYhjIGuljn0YPSaglO5ws/exec";
-
-// ============================
-// LOGIN FUNCTION
+// LOGIN FUNCTION + LOADING
 // ============================
 function login() {
   const username = document.getElementById("username").value;
@@ -26,15 +20,19 @@ function login() {
 
   if (validUser) {
     document.getElementById("loadingScreen").style.display = "flex";
+    document.getElementById("loadingText").innerText =
+      "Selamat datang, " + username + "...";
 
+    // simpan session
     localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("username", username);
     localStorage.setItem("loginTime", Date.now());
 
     setTimeout(() => {
       document.getElementById("loadingScreen").style.display = "none";
       document.getElementById("loginPage").style.display = "none";
       document.querySelector(".container").style.display = "block";
-    }, 1500);
+    }, 3000);
 
   } else {
     errorMsg.innerText = "Username atau password salah!";
@@ -42,29 +40,66 @@ function login() {
 }
 
 // ============================
-// LOGOUT
+// LOGOUT FUNCTION
 // ============================
 function logout() {
-  if (!confirm("Yakin ingin logout?")) return;
+  const konfirmasi = confirm("Yakin ingin logout?");
 
-  localStorage.clear();
+  if (!konfirmasi) return;
 
+  // hapus session
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("username");
+  localStorage.removeItem("loginTime");
+
+  // tampilkan login kembali TANPA reload
   document.getElementById("loginPage").style.display = "flex";
   document.querySelector(".container").style.display = "none";
+
+  // optional: kosongkan input
+  document.getElementById("username").value = "";
+  document.getElementById("password").value = "";
 }
 
 // ============================
-// AUTO LOGIN
+// AUTO LOGOUT 1 JAM
+// ============================
+const MAX_TIME = 60 * 60 * 1000; // 1 jam
+
+function checkSession() {
+  const loginTime = localStorage.getItem("loginTime");
+
+  if (!loginTime) return;
+
+  const now = Date.now();
+  const selisih = now - loginTime;
+
+  if (selisih > MAX_TIME) {
+    localStorage.clear();
+    alert("Session habis, silakan login kembali.");
+    location.reload();
+  }
+}
+
+// ============================
+// AUTO LOGIN SAAT LOAD
 // ============================
 window.addEventListener("load", () => {
-  if (localStorage.getItem("isLoggedIn") === "true") {
+  checkSession();
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn === "true") {
     document.getElementById("loginPage").style.display = "none";
     document.querySelector(".container").style.display = "block";
   }
 });
 
+// cek tiap 1 menit
+setInterval(checkSession, 60000);
+
 // ============================
-// DATA PERUSAHAAN
+// KONFIGURASI PERUSAHAAN
 // ============================
 const perusahaan = {
   nama: "CV. JAVA TOUR INDONESIA",
@@ -72,8 +107,40 @@ const perusahaan = {
   telepon: "082230425353 / 082230019691"
 };
 
+// ============================
+// DATA TETAP
+// ============================
 const penerimaTetap = "Doni";
 const kotaTetap = "Malang";
+
+// ============================
+// PINDAH INPUT SAAT ENTER
+// ============================
+const inputs = document.querySelectorAll("#generatorBox input, #generatorBox textarea");
+
+inputs.forEach((input, index) => {
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      if (index + 1 < inputs.length) {
+        inputs[index + 1].focus();
+      } else {
+        generate();
+      }
+    }
+  });
+});
+
+// ============================
+// COUNTER DESKRIPSI
+// ============================
+const deskripsiInput = document.getElementById("deskripsi");
+const counter = document.getElementById("counter");
+
+deskripsiInput.addEventListener("input", () => {
+  counter.textContent = deskripsiInput.value.length + " / 120";
+});
 
 // ============================
 // FORMAT NOMINAL
@@ -86,7 +153,7 @@ nominalInput.addEventListener("input", function () {
 });
 
 // ============================
-// TERBILANG
+// FUNGSI TERBILANG
 // ============================
 function terbilang(nilai) {
   const huruf = [
@@ -114,7 +181,7 @@ function terbilang(nilai) {
 }
 
 // ============================
-// GENERATE + KIRIM SHEET
+// GENERATE KUITANSI
 // ============================
 function generate() {
   const terima = document.getElementById("terima").value.trim();
@@ -122,27 +189,18 @@ function generate() {
   const deskripsi = document.getElementById("deskripsi").value.trim();
 
   if (!terima || !nominal || !deskripsi) {
-    alert("Isi semua data!");
+    alert("Silakan isi semua form!");
     return;
   }
 
   const nomor = "KW/" + Math.floor(Math.random() * 900000 + 100000);
-  const tanggal = new Date().toLocaleString("id-ID");
+  const tanggal = new Date().toLocaleDateString("id-ID");
 
-  // kirim ke spreadsheet
-  fetch(scriptURL, {
-    method: "POST",
-    body: JSON.stringify({
-      nomor,
-      terima,
-      nominal: Number(nominal),
-      deskripsi,
-      tanggal
-    })
-  });
-
-  let hasil = terbilang(nominal);
-  hasil = hasil.charAt(0).toUpperCase() + hasil.slice(1) + " rupiah";
+  let hasilTerbilang = terbilang(nominal).replace(/\s+/g, " ").trim();
+  hasilTerbilang =
+    hasilTerbilang.charAt(0).toUpperCase() +
+    hasilTerbilang.slice(1) +
+    " rupiah";
 
   document.getElementById("judulPreview").innerText = perusahaan.nama;
   document.getElementById("alamatPreview").innerText = perusahaan.alamat;
@@ -150,7 +208,7 @@ function generate() {
 
   document.getElementById("no").innerText = "No: " + nomor;
   document.getElementById("kTerima").innerText = terima;
-  document.getElementById("kNominal").innerText = hasil;
+  document.getElementById("kNominal").innerText = hasilTerbilang;
   document.getElementById("kDeskripsi").innerText = deskripsi;
 
   document.getElementById("kJumlah").innerText =
@@ -167,57 +225,39 @@ function generate() {
 }
 
 // ============================
-// DOWNLOAD JPG (FIX BERSIH)
+// DOWNLOAD JPG
 // ============================
 function downloadJPG() {
   const kuitansi = document.querySelector("#kuitansi");
 
-  document.body.classList.add("download-mode");
-
   html2canvas(kuitansi, {
-    backgroundColor: "#ffffff",
-    scale: 2,
-    useCORS: true
+    backgroundColor: "#ffffff", // 🔥 hilangkan abu-abu
+    scale: 2
   }).then(canvas => {
-
-    document.body.classList.remove("download-mode");
-
     const link = document.createElement("a");
     link.download = "kuitansi.jpg";
     link.href = canvas.toDataURL("image/jpeg", 1.0);
     link.click();
-
-    resetForm();
   });
 }
-
 // ============================
-// DOWNLOAD PDF (FIX BERSIH)
+// DOWNLOAD PDF
 // ============================
 async function downloadPDF() {
   const { jsPDF } = window.jspdf;
   const kuitansi = document.querySelector("#kuitansi");
 
-  document.body.classList.add("download-mode");
-
   const canvas = await html2canvas(kuitansi, {
-    backgroundColor: "#ffffff",
-    scale: 2,
-    useCORS: true
+    backgroundColor: "#ffffff", // 🔥 penting
+    scale: 2
   });
-
-  document.body.classList.remove("download-mode");
 
   const imgData = canvas.toDataURL("image/png");
 
   const pdf = new jsPDF("landscape", "px", [canvas.width, canvas.height]);
-  pdf.addImage(imgData, "PNG", 0, 0);
-
+  pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
   pdf.save("kuitansi.pdf");
-
-  resetForm();
 }
-
 // ============================
 // RESET FORM
 // ============================
@@ -226,6 +266,7 @@ function resetForm() {
   document.querySelector(".downloadArea").style.display = "none";
 
   document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+  counter.textContent = "0 / 120";
 }
 
 // ============================
@@ -252,22 +293,3 @@ function changeBackgroundSmooth() {
 
 setInterval(changeBackgroundSmooth, 7000);
 slides[0].classList.add("active");
-
-// ============================
-// ENTER PINDAH INPUT (FIX)
-// ============================
-const inputs = document.querySelectorAll("#generatorBox input, #generatorBox textarea");
-
-inputs.forEach((input, index) => {
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-
-      if (index + 1 < inputs.length) {
-        inputs[index + 1].focus();
-      } else {
-        generate(); // terakhir langsung generate
-      }
-    }
-  });
-});
