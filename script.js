@@ -1,10 +1,15 @@
 // ============================
+// KONFIG GOOGLE SHEET
+// ============================
+const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbyZbkX0aQjCNuCcJEU5U4Is5brefAAIY9--jrOsHzysqDoftPwslXmV8STt2aIEmKDi/exec";
+
+// ============================
 // DATA USER (ADMIN CONTROL)
 // ============================
 const users = [
-  { username: "admin", password: "12345" },
-  { username: "staff", password: "java123" },
-  { username: "affan", password: "AffanCakep" }
+  { username: "JavaTour", password: "12345" },
+  { username: "affan", password: "AffanCakep" },
+  { username: "user", password: "21062011" }
   
 ];
 
@@ -25,7 +30,6 @@ function login() {
     document.getElementById("loadingText").innerText =
       "Selamat datang, " + username + "...";
 
-    // simpan session
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("username", username);
     localStorage.setItem("loginTime", Date.now());
@@ -34,7 +38,7 @@ function login() {
       document.getElementById("loadingScreen").style.display = "none";
       document.getElementById("loginPage").style.display = "none";
       document.querySelector(".container").style.display = "block";
-    }, 3000);
+    }, 2000);
 
   } else {
     errorMsg.innerText = "Username atau password salah!";
@@ -42,62 +46,70 @@ function login() {
 }
 
 // ============================
+// ENTER LOGIN NAVIGATION
+// ============================
+const loginInputs = document.querySelectorAll("#loginPage input");
+
+loginInputs.forEach((input, index) => {
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      if (index === 0) {
+        loginInputs[1].focus();
+      } else {
+        login();
+      }
+    }
+  });
+});
+
+// auto focus username
+window.addEventListener("load", () => {
+  const usernameInput = document.getElementById("username");
+  if (usernameInput) usernameInput.focus();
+});
+
+// ============================
 // LOGOUT FUNCTION
 // ============================
 function logout() {
-  const konfirmasi = confirm("Yakin ingin logout?");
+  if (!confirm("Yakin ingin logout?")) return;
 
-  if (!konfirmasi) return;
+  localStorage.clear();
 
-  // hapus session
-  localStorage.removeItem("isLoggedIn");
-  localStorage.removeItem("username");
-  localStorage.removeItem("loginTime");
-
-  // tampilkan login kembali TANPA reload
   document.getElementById("loginPage").style.display = "flex";
   document.querySelector(".container").style.display = "none";
 
-  // optional: kosongkan input
   document.getElementById("username").value = "";
   document.getElementById("password").value = "";
 }
 
 // ============================
-// AUTO LOGOUT 1 JAM
+// AUTO LOGIN & SESSION
 // ============================
-const MAX_TIME = 60 * 60 * 1000; // 1 jam
+const MAX_TIME = 60 * 60 * 1000;
 
 function checkSession() {
   const loginTime = localStorage.getItem("loginTime");
-
   if (!loginTime) return;
 
-  const now = Date.now();
-  const selisih = now - loginTime;
-
-  if (selisih > MAX_TIME) {
+  if (Date.now() - loginTime > MAX_TIME) {
     localStorage.clear();
     alert("Session habis, silakan login kembali.");
     location.reload();
   }
 }
 
-// ============================
-// AUTO LOGIN SAAT LOAD
-// ============================
 window.addEventListener("load", () => {
   checkSession();
 
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-  if (isLoggedIn === "true") {
+  if (localStorage.getItem("isLoggedIn") === "true") {
     document.getElementById("loginPage").style.display = "none";
     document.querySelector(".container").style.display = "block";
   }
 });
 
-// cek tiap 1 menit
 setInterval(checkSession, 60000);
 
 // ============================
@@ -109,14 +121,11 @@ const perusahaan = {
   telepon: "082230425353 / 082230019691"
 };
 
-// ============================
-// DATA TETAP
-// ============================
 const penerimaTetap = "Doni";
 const kotaTetap = "Malang";
 
 // ============================
-// PINDAH INPUT SAAT ENTER
+// INPUT NAVIGATION FORM
 // ============================
 const inputs = document.querySelectorAll("#generatorBox input, #generatorBox textarea");
 
@@ -155,31 +164,38 @@ nominalInput.addEventListener("input", function () {
 });
 
 // ============================
-// FUNGSI TERBILANG
+// TERBILANG
 // ============================
 function terbilang(nilai) {
-  const huruf = [
-    "", "satu", "dua", "tiga", "empat", "lima",
-    "enam", "tujuh", "delapan", "sembilan",
-    "sepuluh", "sebelas"
-  ];
+  const huruf = ["", "satu", "dua", "tiga", "empat", "lima",
+    "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
 
   nilai = parseInt(nilai);
 
   if (nilai < 12) return huruf[nilai];
   if (nilai < 20) return terbilang(nilai - 10) + " belas";
-  if (nilai < 100)
-    return terbilang(Math.floor(nilai / 10)) + " puluh " + terbilang(nilai % 10);
+  if (nilai < 100) return terbilang(Math.floor(nilai / 10)) + " puluh " + terbilang(nilai % 10);
   if (nilai < 200) return "seratus " + terbilang(nilai - 100);
-  if (nilai < 1000)
-    return terbilang(Math.floor(nilai / 100)) + " ratus " + terbilang(nilai % 100);
+  if (nilai < 1000) return terbilang(Math.floor(nilai / 100)) + " ratus " + terbilang(nilai % 100);
   if (nilai < 2000) return "seribu " + terbilang(nilai - 1000);
-  if (nilai < 1000000)
-    return terbilang(Math.floor(nilai / 1000)) + " ribu " + terbilang(nilai % 1000);
-  if (nilai < 1000000000)
-    return terbilang(Math.floor(nilai / 1000000)) + " juta " + terbilang(nilai % 1000000);
+  if (nilai < 1000000) return terbilang(Math.floor(nilai / 1000)) + " ribu " + terbilang(nilai % 1000);
+  if (nilai < 1000000000) return terbilang(Math.floor(nilai / 1000000)) + " juta " + terbilang(nilai % 1000000);
 
   return "";
+}
+
+// ============================
+// KIRIM KE GOOGLE SHEET
+// ============================
+function kirimKeSpreadsheet(data) {
+  fetch(SPREADSHEET_URL, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.json())
+  .then(res => console.log("Spreadsheet:", res))
+  .catch(err => console.error("Error:", err));
 }
 
 // ============================
@@ -198,11 +214,10 @@ function generate() {
   const nomor = "KW/" + Math.floor(Math.random() * 900000 + 100000);
   const tanggal = new Date().toLocaleDateString("id-ID");
 
-  let hasilTerbilang = terbilang(nominal).replace(/\s+/g, " ").trim();
+  let hasilTerbilang = terbilang(nominal);
   hasilTerbilang =
     hasilTerbilang.charAt(0).toUpperCase() +
-    hasilTerbilang.slice(1) +
-    " rupiah";
+    hasilTerbilang.slice(1) + " rupiah";
 
   document.getElementById("judulPreview").innerText = perusahaan.nama;
   document.getElementById("alamatPreview").innerText = perusahaan.alamat;
@@ -216,14 +231,20 @@ function generate() {
   document.getElementById("kJumlah").innerText =
     "Rp " + Number(nominal).toLocaleString("id-ID") + ",00";
 
-  document.getElementById("kPenerima").innerText =
-    "Penerima: " + penerimaTetap;
-
-  document.getElementById("tanggal").innerText =
-    kotaTetap + ", " + tanggal;
+  document.getElementById("kPenerima").innerText = "Penerima: " + penerimaTetap;
+  document.getElementById("tanggal").innerText = kotaTetap + ", " + tanggal;
 
   document.getElementById("kuitansi").style.display = "block";
   document.querySelector(".downloadArea").style.display = "flex";
+
+  // 🔥 KIRIM DATA KE SPREADSHEET
+  kirimKeSpreadsheet({
+    no: nomor,
+    terima: terima,
+    nominal: Number(nominal),
+    deskripsi: deskripsi,
+    tanggal: tanggal
+  });
 }
 
 // ============================
@@ -233,7 +254,7 @@ function downloadJPG() {
   const kuitansi = document.querySelector("#kuitansi");
 
   html2canvas(kuitansi, {
-    backgroundColor: "#ffffff", // 🔥 hilangkan abu-abu
+    backgroundColor: "#ffffff",
     scale: 2
   }).then(canvas => {
     const link = document.createElement("a");
@@ -242,6 +263,7 @@ function downloadJPG() {
     link.click();
   });
 }
+
 // ============================
 // DOWNLOAD PDF
 // ============================
@@ -250,7 +272,7 @@ async function downloadPDF() {
   const kuitansi = document.querySelector("#kuitansi");
 
   const canvas = await html2canvas(kuitansi, {
-    backgroundColor: "#ffffff", // 🔥 penting
+    backgroundColor: "#ffffff",
     scale: 2
   });
 
@@ -259,16 +281,6 @@ async function downloadPDF() {
   const pdf = new jsPDF("landscape", "px", [canvas.width, canvas.height]);
   pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
   pdf.save("kuitansi.pdf");
-}
-// ============================
-// RESET FORM
-// ============================
-function resetForm() {
-  document.getElementById("kuitansi").style.display = "none";
-  document.querySelector(".downloadArea").style.display = "none";
-
-  document.querySelectorAll("input, textarea").forEach(el => el.value = "");
-  counter.textContent = "0 / 120";
 }
 
 // ============================

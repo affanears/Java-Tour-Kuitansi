@@ -324,8 +324,8 @@ font-size:24px;
 .kFooter{
 display:flex;
 justify-content:space-between;
-margin-top:30px;
-align-items:flex-end;
+margin-top:10px; /* lebih kecil dari 30px */
+align-items:flex-start; /* ⬅️ ini kuncinya */
 }
 
 .syaratBox{
@@ -342,6 +342,14 @@ text-align:center;
 .ttdBox img{
 width:120px;
 margin-top:10px;
+}
+
+.syaratBox{
+width:420px;
+font-size:11px;
+line-height:1.5;
+color:#444;
+margin-top:-10px; /* ⬅️ naik sedikit */
 }
 
 /* ========================= */
@@ -424,4 +432,35 @@ margin-bottom:15px;
 @keyframes spin{
 0%{ transform:rotate(0deg); }
 100%{ transform:rotate(360deg); }
+}
+
+.loginCredit{
+font-size:12px;
+color:#888;
+margin-bottom:15px;
+}
+
+.loginCredit{
+font-size:12px;
+margin-bottom:15px;
+}
+
+.loginCredit a{
+color:#f97316; /* sama seperti tema */
+text-decoration:none;
+font-weight:500;
+}
+
+.loginCredit a:hover{
+text-decoration:underline;
+}
+
+.versi{
+position:fixed;
+bottom:10px;
+right:15px;
+font-size:12px;
+color:#aaa;
+z-index:999;
+pointer-events:none; /* biar tidak ganggu klik */
 }
