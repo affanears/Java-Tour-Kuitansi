@@ -257,12 +257,13 @@ position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-opacity:0.08;
+opacity:0.12;
 z-index:0;
 }
 
 .watermark img{
-width:400px;
+  width:400px;
+  filter: contrast(110%) brightness(95%);
 }
 
 .kHeader,

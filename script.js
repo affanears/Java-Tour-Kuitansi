@@ -1,7 +1,7 @@
 // ============================
 // KONEKSI GOOGLE SPREADSHEET
 // ============================
-const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbzCMFOk6RZeQeTHFvXeVPi71Y5jFpss_X0waYbjmx8yJ3mwvjr4iBMwbgm1Jpjwhsqb1g/exec";
+const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbwi685YRE_3mOa3lYlScN1q6W6GdsNq4_2PzQrhGnwp-3SYWTiT93RvyxWrKgKxrEaefQ/exec";
 
 
 // ============================
@@ -91,7 +91,7 @@ function logout() {
 // ============================
 // SESSION LOGIN
 // ============================
-const MAX_TIME = 60 * 60 * 1000;
+const MAX_TIME = 24 * 60 * 60 * 1000; // 24 jam
 
 function checkSession() {
   const loginTime = localStorage.getItem("loginTime");
@@ -127,6 +127,40 @@ const perusahaan = {
 
 const penerimaTetap = "Doni";
 const kotaTetap = "Malang";
+
+
+// ============================
+// GENERATE NOMOR KUITANSI BARU
+// ============================
+function generateNomorKuitansi() {
+  const now = new Date();
+
+  const tahun = now.getFullYear().toString().slice(-2); // 26
+  const bulan = String(now.getMonth() + 1).padStart(2, "0"); // 03
+
+  let lastNumber = localStorage.getItem("lastNumber");
+  let lastMonth = localStorage.getItem("lastMonth");
+
+  // reset tiap bulan
+  if (lastMonth !== bulan) {
+    lastNumber = 0;
+  }
+
+  let nomorUrut = parseInt(lastNumber || "0") + 1;
+
+  localStorage.setItem("lastNumber", nomorUrut);
+  localStorage.setItem("lastMonth", bulan);
+
+  // 🔥 2 digit MINIMAL (tapi bisa lebih)
+  let nomorFormat;
+  if (nomorUrut < 10) {
+    nomorFormat = "0" + nomorUrut; // 01
+  } else {
+    nomorFormat = nomorUrut.toString(); // 10, 99, 100, dst
+  }
+
+  return `JT/${tahun}${bulan}${nomorFormat}`;
+}
 
 
 // ============================
@@ -243,7 +277,7 @@ function generate() {
     return;
   }
 
-  const nomor = "KW/" + Math.floor(Math.random() * 900000 + 100000);
+  const nomor = generateNomorKuitansi();
   const tanggal = new Date().toLocaleDateString("id-ID");
 
   let hasilTerbilang = terbilang(nominal);
