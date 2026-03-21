@@ -1,7 +1,7 @@
 // ============================
 // KONEKSI GOOGLE SPREADSHEET
 // ============================
-const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbwi685YRE_3mOa3lYlScN1q6W6GdsNq4_2PzQrhGnwp-3SYWTiT93RvyxWrKgKxrEaefQ/exec";
+const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbzWQulJ20RJ4nOHOV50BTw069vk59B-fs-h2GCyszRmegtltekHcqoF8AtG1BlrtFszWw/exec";
 
 
 // ============================
