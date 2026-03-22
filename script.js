@@ -10,7 +10,7 @@ const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbwi685YRE_3mOa3
 const users = [
   { username: "JavaTour", password: "12345" },
   { username: "affan", password: "AffanCakep" },
-  { username: "user", password: "21062011" }
+  { username: "admin", password: "12345" }
 ];
 
 
