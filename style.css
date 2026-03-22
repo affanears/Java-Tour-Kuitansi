@@ -303,9 +303,19 @@ font-size:15px;
 }
 
 .dataLine{
-border-bottom:1px dashed #aaa;
-padding-bottom:4px;
-margin-bottom:12px;
+  border-bottom:1px dashed #aaa;
+  padding-bottom:4px;
+  margin-bottom:12px;
+
+  /* 🔥 TAMBAHAN PENTING */
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.kContent{
+  font-size:15px;
+  line-height:1.4;
 }
 
 .jumlahBox{
