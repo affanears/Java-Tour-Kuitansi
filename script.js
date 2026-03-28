@@ -1,4 +1,11 @@
 // ============================
+// 🔥 SUPABASE CONFIG
+// ============================
+const SUPABASE_URL = "https://fduhqhzndfwxqqmsndxb.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkdWhxaHpuZGZ3eHFxbXNuZHhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2OTMxMjIsImV4cCI6MjA5MDI2OTEyMn0.3huJorv2XC_s0M3AQv4SVoiz6uolRayaXIMJSIV3o2g";
+
+
+// ============================
 // KONEKSI GOOGLE SPREADSHEET
 // ============================
 const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbwi685YRE_3mOa3lYlScN1q6W6GdsNq4_2PzQrhGnwp-3SYWTiT93RvyxWrKgKxrEaefQ/exec";
@@ -91,7 +98,7 @@ function logout() {
 // ============================
 // SESSION LOGIN
 // ============================
-const MAX_TIME = 24 * 60 * 60 * 1000; // 24 jam
+const MAX_TIME = 24 * 60 * 60 * 1000;
 
 function checkSession() {
   const loginTime = localStorage.getItem("loginTime");
@@ -130,41 +137,46 @@ const kotaTetap = "Malang";
 
 
 // ============================
-// GENERATE NOMOR KUITANSI BARU
+// 🔥 GENERATE NOMOR (SUPABASE)
 // ============================
-function generateNomorKuitansi() {
+async function generateNomorKuitansi() {
   const now = new Date();
 
-  const tahun = now.getFullYear().toString().slice(-2); // 26
-  const bulan = String(now.getMonth() + 1).padStart(2, "0"); // 03
+  const tahun = now.getFullYear().toString().slice(-2);
+  const bulan = String(now.getMonth() + 1).padStart(2, "0");
 
-  let lastNumber = localStorage.getItem("lastNumber");
-  let lastMonth = localStorage.getItem("lastMonth");
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_next_kuitansi_number`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      },
+      body: JSON.stringify({
+        p_tahun: tahun,
+        p_bulan: bulan
+      })
+    });
 
-  // reset tiap bulan
-  if (lastMonth !== bulan) {
-    lastNumber = 0;
+    const nomorUrut = await response.json();
+
+    let nomorFormat = nomorUrut < 10
+      ? "0" + nomorUrut
+      : nomorUrut.toString();
+
+    return `JT/${tahun}${bulan}${nomorFormat}`;
+
+  } catch (err) {
+    alert("Gagal ambil nomor dari server!");
+    console.error(err);
+    return "ERROR";
   }
-
-  let nomorUrut = parseInt(lastNumber || "0") + 1;
-
-  localStorage.setItem("lastNumber", nomorUrut);
-  localStorage.setItem("lastMonth", bulan);
-
-  // 🔥 2 digit MINIMAL (tapi bisa lebih)
-  let nomorFormat;
-  if (nomorUrut < 10) {
-    nomorFormat = "0" + nomorUrut; // 01
-  } else {
-    nomorFormat = nomorUrut.toString(); // 10, 99, 100, dst
-  }
-
-  return `JT/${tahun}${bulan}${nomorFormat}`;
 }
 
 
 // ============================
-// NAVIGASI INPUT FORM
+// NAVIGASI INPUT FORM (ENTER)
 // ============================
 window.addEventListener("load", () => {
   const inputs = document.querySelectorAll("#generatorBox input, #generatorBox textarea");
@@ -186,21 +198,6 @@ window.addEventListener("load", () => {
 
 
 // ============================
-// COUNTER DESKRIPSI
-// ============================
-window.addEventListener("load", () => {
-  const deskripsiInput = document.getElementById("deskripsi");
-  const counter = document.getElementById("counter");
-
-  if (deskripsiInput) {
-    deskripsiInput.addEventListener("input", () => {
-      counter.textContent = deskripsiInput.value.length + " / 300";
-    });
-  }
-});
-
-
-// ============================
 // FORMAT NOMINAL
 // ============================
 window.addEventListener("load", () => {
@@ -210,6 +207,21 @@ window.addEventListener("load", () => {
     nominalInput.addEventListener("input", function () {
       let angka = this.value.replace(/[^0-9]/g, "");
       this.value = angka ? Number(angka).toLocaleString("id-ID") : "";
+    });
+  }
+});
+
+
+// ============================
+// COUNTER DESKRIPSI
+// ============================
+window.addEventListener("load", () => {
+  const deskripsiInput = document.getElementById("deskripsi");
+  const counter = document.getElementById("counter");
+
+  if (deskripsiInput) {
+    deskripsiInput.addEventListener("input", () => {
+      counter.textContent = deskripsiInput.value.length + " / 300";
     });
   }
 });
@@ -254,20 +266,14 @@ function kirimKeSpreadsheet(data) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  })
-  .then(() => {
-    console.log("Data berhasil dikirim ke Spreadsheet");
-  })
-  .catch(error => {
-    console.error("Gagal kirim data:", error);
   });
 }
 
 
 // ============================
-// GENERATE KUITANSI
+// 🔥 GENERATE KUITANSI
 // ============================
-function generate() {
+async function generate() {
   const terima = document.getElementById("terima").value.trim();
   const nominal = document.getElementById("nominal").value.replace(/\./g, "");
   const deskripsi = document.getElementById("deskripsi").value.trim();
@@ -277,7 +283,9 @@ function generate() {
     return;
   }
 
-  const nomor = generateNomorKuitansi();
+  const nomor = await generateNomorKuitansi();
+  if (nomor === "ERROR") return;
+
   const tanggal = new Date().toLocaleDateString("id-ID");
 
   let hasilTerbilang = terbilang(nominal);
@@ -304,14 +312,31 @@ function generate() {
   document.getElementById("kuitansi").style.display = "block";
   document.querySelector(".downloadArea").style.display = "flex";
 
-  // kirim ke spreadsheet
   kirimKeSpreadsheet({
     no: nomor,
-    terima: terima,
+    terima,
     nominal: Number(nominal),
-    deskripsi: deskripsi,
-    tanggal: tanggal
+    deskripsi,
+    tanggal
   });
+}
+
+
+// ============================
+// 🔥 RESET FORM
+// ============================
+function resetForm() {
+  document.getElementById("terima").value = "";
+  document.getElementById("nominal").value = "";
+  document.getElementById("deskripsi").value = "";
+
+  document.getElementById("kuitansi").style.display = "none";
+  document.querySelector(".downloadArea").style.display = "none";
+
+  const counter = document.getElementById("counter");
+  if (counter) counter.textContent = "0 / 300";
+
+  document.getElementById("terima").focus();
 }
 
 
@@ -329,6 +354,8 @@ function downloadJPG() {
     link.download = "kuitansi.jpg";
     link.href = canvas.toDataURL("image/jpeg", 1.0);
     link.click();
+
+    setTimeout(resetForm, 800);
   });
 }
 
@@ -350,32 +377,6 @@ async function downloadPDF() {
   const pdf = new jsPDF("landscape", "px", [canvas.width, canvas.height]);
   pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
   pdf.save("kuitansi.pdf");
+
+  setTimeout(resetForm, 800);
 }
-
-
-// ============================
-// BACKGROUND SLIDER
-// ============================
-const backgrounds = ["bg1.jpg", "bg2.jpg", "bg3.jpg", "bg4.jpg"];
-let current = 0;
-
-window.addEventListener("load", () => {
-  const slides = document.querySelectorAll(".bg-slide");
-
-  if (slides.length < 2) return;
-
-  slides[0].style.backgroundImage = `url('${backgrounds[0]}')`;
-  slides[1].style.backgroundImage = `url('${backgrounds[1]}')`;
-  slides[0].classList.add("active");
-
-  setInterval(() => {
-    const next = (current + 1) % backgrounds.length;
-
-    slides[next % 2].style.backgroundImage = `url('${backgrounds[next]}')`;
-
-    slides[current % 2].classList.remove("active");
-    slides[next % 2].classList.add("active");
-
-    current = next;
-  }, 7000);
-});

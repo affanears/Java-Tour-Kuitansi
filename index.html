@@ -1,36 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>kuitansi 4.0</title>
-    <link rel="stylesheet" href="./style.css">
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Kuitansi Java Tour 3.2</title>
-    <link rel="stylesheet" href="./style.css">
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Generator Kuitansi Java Tour</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Generator Kuitansi Java Tour</title>
+
+  <!-- 🔥 WAJIB UNTUK MOBILE -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- ========================= -->
 <!-- LOGIN PAGE -->
+<!-- ========================= -->
 <div id="loginPage" class="loginPage">
   <div class="loginBox">
     <img src="logo-java-tour.png" class="loginLogo">
@@ -48,134 +32,141 @@
   </div>
 </div>
 
+<!-- ========================= -->
 <!-- LOADING -->
+<!-- ========================= -->
 <div id="loadingScreen" class="loadingScreen">
   <img src="logo-java-tour.png" class="loadingLogo">
   <div class="loader"></div>
   <p id="loadingText">Memproses login...</p>
 </div>
 
+<!-- ========================= -->
 <!-- BACKGROUND -->
+<!-- ========================= -->
 <div class="bg-slider">
   <div class="bg-slide active"></div>
   <div class="bg-slide"></div>
 </div>
 
-<!-- MAIN -->
+<!-- ========================= -->
+<!-- MAIN CONTAINER -->
+<!-- ========================= -->
 <div class="container">
 
-<button class="logoutBtn" onclick="logout()">Logout</button>
+  <button class="logoutBtn" onclick="logout()">Logout</button>
 
-<!-- FORM -->
-<div class="formBox" id="generatorBox">
+  <!-- ========================= -->
+  <!-- FORM -->
+  <!-- ========================= -->
+  <div class="formBox" id="generatorBox">
 
-<div class="formHeader">
-<img src="logo-java-tour.png" class="formLogo">
-<h2>Java Tour Kuitansi</h2>
-</div>
+    <div class="formHeader">
+      <img src="logo-java-tour.png" class="formLogo">
+      <h2>Java Tour Kuitansi</h2>
+    </div>
 
-<div class="credit">
-by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
-</div>
+    <div class="credit">
+      by <a href="https://instagram.com/affanears" target="_blank">@affanears</a>
+    </div>
 
-<input id="terima" placeholder="Terima Dari" maxlength="40">
-<input id="nominal" type="text" placeholder="Nominal Uang">
+    <input id="terima" placeholder="Terima Dari" maxlength="40">
+    <input id="nominal" type="text" placeholder="Nominal Uang">
 
-<textarea id="deskripsi" placeholder="Deskripsi Pembayaran" maxlength="300"></textarea>
-<div id="counter">0 / 300</div>
+    <textarea id="deskripsi" placeholder="Deskripsi Pembayaran" maxlength="300"></textarea>
+    <div id="counter">0 / 300</div>
 
-<button onclick="generate()">Generate Kuitansi</button>
+    <button onclick="generate()">Generate Kuitansi</button>
+  </div>
 
-</div>
+  <!-- ========================= -->
+  <!-- KUITANSI -->
+  <!-- ========================= -->
+  <div id="kuitansi">
 
-<!-- KUITANSI -->
-<div id="kuitansi">
+    <div class="watermark">
+      <img src="logo-watermark.png">
+    </div>
 
-<div class="watermark">
-<img src="logo-watermark.png">
-</div>
+    <!-- HEADER -->
+    <div class="kHeader">
 
-<div class="kHeader">
+      <div class="logoBox">
+        <img id="logoPreview" src="logo-java-tour.png">
+      </div>
 
-<div class="logoBox">
-<img id="logoPreview" src="logo-java-tour.png">
-</div>
+      <div class="titleBox">
+        <h1>KUITANSI</h1>
+        <p id="no"></p>
+      </div>
 
-<div class="titleBox">
-<h1>KUITANSI</h1>
-<p id="no"></p>
-</div>
+      <div class="companyBox">
+        <h3 id="judulPreview"></h3>
+        <p id="alamatPreview"></p>
+        <p id="teleponPreview"></p>
+      </div>
 
-<div class="companyBox">
-<h3 id="judulPreview"></h3>
-<p id="alamatPreview"></p>
-<p id="teleponPreview"></p>
-</div>
+    </div>
 
-</div>
+    <!-- CONTENT -->
+    <div class="kContent">
 
-<div class="kContent">
+      <p><b>Terima dari</b></p>
+      <p class="dataLine" id="kTerima"></p>
 
-<p><b>Terima dari</b></p>
-<p class="dataLine" id="kTerima"></p>
+      <p><b>Uang sejumlah</b></p>
+      <p class="dataLine" id="kNominal"></p>
 
-<p><b>Uang sejumlah</b></p>
-<p class="dataLine" id="kNominal"></p>
+      <p><b>Untuk pembayaran</b></p>
+      <p class="dataLine" id="kDeskripsi"></p>
 
-<p><b>Untuk pembayaran</b></p>
-<p class="dataLine" id="kDeskripsi"></p>
+    </div>
 
-</div>
+    <!-- JUMLAH -->
+    <div class="jumlahBox">
+      <span>Jumlah</span>
+      <h2 id="kJumlah"></h2>
+    </div>
 
-<div class="jumlahBox">
-<span>Jumlah</span>
-<h2 id="kJumlah"></h2>
-</div>
+    <!-- FOOTER -->
+    <div class="kFooter">
 
-<div class="kFooter">
+      <div class="syaratBox">
+        <b>Syarat dan Ketentuan</b>
+        <p>1. Down Payment 30% dari total biaya</p>
+        <p>2. Pelunasan H-1 sebelum trip</p>
+        <p>3. Harga bisa berubah sesuai jumlah peserta</p>
+        <p>4. Semua pembayaran tidak dapat dikembalikan</p>
+      </div>
 
-<div class="syaratBox">
-<b>Syarat dan Ketentuan</b>
-<p>1. Down Payment 30 % dari total biaya dan pelunasan H-1 sebelum trip</p>
-<p>2. Jika ada perubahan jumlah peserta otomatis harga berubah (Konfirmasi H-7)</p>
-<p>3. Semua pembayaran tidak dapat dikembalikan</p>
-<p>4. Pembatalan trip, DP hangus</p>
-</div>
+      <div class="ttdBox">
+        <p id="tanggal"></p>
+        <img id="ttdPreview" src="ttd.png">
+        <p id="kPenerima"></p>
+      </div>
 
-<div class="ttdBox">
-<p id="tanggal"></p>
-<img id="ttdPreview" src="ttd.png">
-<p id="kPenerima"></p>
-</div>
+    </div>
 
-</div>
+  </div>
 
-</div>
-
-<!-- DOWNLOAD -->
-<div class="downloadArea">
-<button onclick="downloadJPG()">Download JPG</button>
-<button onclick="downloadPDF()">Download PDF</button>
-</div>
+  <!-- ========================= -->
+  <!-- DOWNLOAD -->
+  <!-- ========================= -->
+  <div class="downloadArea">
+    <button onclick="downloadJPG()">Download JPG</button>
+    <button onclick="downloadPDF()">Download PDF</button>
+  </div>
 
 </div>
 
 <p class="versi">Versi 4.0</p>
 
+<!-- ========================= -->
 <!-- SCRIPT -->
+<!-- ========================= -->
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="script.js"></script>
 
 </body>
-</html>
-    <script  src="./script.js"></script>
-
-  </body>
-  
-</html>
-    <script  src="./script.js"></script>
-
-  </body>
-  
 </html>

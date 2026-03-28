@@ -475,3 +475,107 @@ color:#aaa;
 z-index:999;
 pointer-events:none; /* biar tidak ganggu klik */
 }
+
+/* ========================= */
+/* 📱 MOBILE RESPONSIVE */
+/* ========================= */
+@media (max-width: 768px) {
+
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  .formBox {
+    padding: 20px;
+  }
+
+  .formBox h2 {
+    font-size: 22px;
+  }
+
+  .formLogo {
+    width: 45px;
+  }
+
+  .formBox input,
+  .formBox textarea {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .formBox button {
+    height: 50px;
+    font-size: 15px;
+  }
+
+  /* 🔥 KUITANSI MOBILE */
+  #kuitansi {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
+
+  .kHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .companyBox {
+    text-align: left;
+  }
+
+  .titleBox h1 {
+    font-size: 24px;
+  }
+
+  .logoBox img {
+    width: 50px;
+  }
+
+  .kContent {
+    font-size: 14px;
+  }
+
+  .jumlahBox {
+    width: 100%;
+  }
+
+  .kFooter {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .syaratBox {
+    width: 100%;
+    font-size: 10px;
+  }
+
+  .ttdBox img {
+    width: 100px;
+  }
+
+  /* 🔥 BUTTON DOWNLOAD */
+  .downloadArea {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .downloadArea button {
+    width: 100%;
+  }
+
+  /* 🔥 LOGIN */
+  .loginBox {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .loginBox h2 {
+    font-size: 20px;
+  }
+}
