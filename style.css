@@ -1,3 +1,4 @@
+
 *{
 margin:0;
 padding:0;
@@ -242,7 +243,7 @@ transform:scale(1.03);
 display:none;
 width:900px;
 aspect-ratio:595/419;
-background:#ffffff !important; /* 🔥 FIX abu-abu */
+background:#ffffff !important;
 padding:35px;
 border-radius:12px;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
@@ -300,22 +301,16 @@ color:#555;
 
 .kContent{
 font-size:15px;
+line-height:1.4;
 }
 
 .dataLine{
-  border-bottom:1px dashed #aaa;
-  padding-bottom:4px;
-  margin-bottom:12px;
-
-  /* 🔥 TAMBAHAN PENTING */
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.kContent{
-  font-size:15px;
-  line-height:1.4;
+border-bottom:1px dashed #aaa;
+padding-bottom:4px;
+margin-bottom:12px;
+white-space: normal;
+word-wrap: break-word;
+overflow-wrap: break-word;
 }
 
 .jumlahBox{
@@ -335,8 +330,8 @@ font-size:24px;
 .kFooter{
 display:flex;
 justify-content:space-between;
-margin-top:10px; /* lebih kecil dari 30px */
-align-items:flex-start; /* ⬅️ ini kuncinya */
+margin-top:10px;
+align-items:flex-start;
 }
 
 .syaratBox{
@@ -344,6 +339,7 @@ width:420px;
 font-size:11px;
 line-height:1.5;
 color:#444;
+margin-top:-10px;
 }
 
 .ttdBox{
@@ -353,14 +349,6 @@ text-align:center;
 .ttdBox img{
 width:120px;
 margin-top:10px;
-}
-
-.syaratBox{
-width:420px;
-font-size:11px;
-line-height:1.5;
-color:#444;
-margin-top:-10px; /* ⬅️ naik sedikit */
 }
 
 /* ========================= */
@@ -373,7 +361,7 @@ justify-content:center;
 gap:15px;
 margin-top:15px;
 position:relative;
-z-index:3; /* 🔥 pastikan bisa diklik */
+z-index:3;
 }
 
 .downloadArea button{
@@ -447,17 +435,11 @@ margin-bottom:15px;
 
 .loginCredit{
 font-size:12px;
-color:#888;
-margin-bottom:15px;
-}
-
-.loginCredit{
-font-size:12px;
 margin-bottom:15px;
 }
 
 .loginCredit a{
-color:#f97316; /* sama seperti tema */
+color:#f97316;
 text-decoration:none;
 font-weight:500;
 }
@@ -473,109 +455,6 @@ right:15px;
 font-size:12px;
 color:#aaa;
 z-index:999;
-pointer-events:none; /* biar tidak ganggu klik */
+pointer-events:none;
 }
 
-/* ========================= */
-/* 📱 MOBILE RESPONSIVE */
-/* ========================= */
-@media (max-width: 768px) {
-
-  body {
-    padding: 10px;
-  }
-
-  .container {
-    width: 100%;
-  }
-
-  .formBox {
-    padding: 20px;
-  }
-
-  .formBox h2 {
-    font-size: 22px;
-  }
-
-  .formLogo {
-    width: 45px;
-  }
-
-  .formBox input,
-  .formBox textarea {
-    padding: 12px;
-    font-size: 14px;
-  }
-
-  .formBox button {
-    height: 50px;
-    font-size: 15px;
-  }
-
-  /* 🔥 KUITANSI MOBILE */
-  #kuitansi {
-    width: 100%;
-    height: auto;
-    padding: 20px;
-  }
-
-  .kHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .companyBox {
-    text-align: left;
-  }
-
-  .titleBox h1 {
-    font-size: 24px;
-  }
-
-  .logoBox img {
-    width: 50px;
-  }
-
-  .kContent {
-    font-size: 14px;
-  }
-
-  .jumlahBox {
-    width: 100%;
-  }
-
-  .kFooter {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .syaratBox {
-    width: 100%;
-    font-size: 10px;
-  }
-
-  .ttdBox img {
-    width: 100px;
-  }
-
-  /* 🔥 BUTTON DOWNLOAD */
-  .downloadArea {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .downloadArea button {
-    width: 100%;
-  }
-
-  /* 🔥 LOGIN */
-  .loginBox {
-    width: 90%;
-    padding: 25px;
-  }
-
-  .loginBox h2 {
-    font-size: 20px;
-  }
-}
